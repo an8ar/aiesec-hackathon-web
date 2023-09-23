@@ -5,14 +5,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useRef, useState } from 'react';
 
-
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import {
   Button, Dialog, DialogTitle, TextField, DialogContent, DialogActions,
 } from '@mui/material';
-
-import { Button, TextField } from '@mui/material';
-
 import Webcam from 'react-webcam';
 import styled from 'styled-components';
 
@@ -25,7 +20,6 @@ const StyledPhotoContainer = styled.div`
 const StyledCanvas = styled.canvas`
   border: 1px solid #ccc;
 `;
-// ... (previous code)
 
 function PhotoCapture() {
   const webcamRef = useRef<Webcam | null>(null);
@@ -47,21 +41,12 @@ function PhotoCapture() {
     setDialogOpen(false);
   };
 
-  const [email, setEmail] = useState<string>(''); // State variable for user's email
-  const [captureStatus, setCaptureStatus] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const text = `Astana, Kazakhstan, ${new Date().toLocaleDateString()}}`;
-  const [takingPhoto, setTakingPhoto] = useState<boolean>(false);
-
   const capturePhoto = () => {
     if (!webcamRef.current) return;
 
     const canvas = document.createElement('canvas');
-
     canvas.width = webcamRef.current.video!.videoWidth * 2;
     canvas.height = webcamRef.current.video!.videoHeight * 2;
-    canvas.width = webcamRef.current.video!.videoWidth - 100;
-    canvas.height = webcamRef.current.video!.videoHeight - 70;
     const context = canvas.getContext('2d')!;
 
     context.fillStyle = 'black';
@@ -73,19 +58,8 @@ function PhotoCapture() {
 
     frame.onload = () => {
       context.drawImage(frame, 0, 0, canvas.width, canvas.height);
-    frame.src = '/f.jpg';
-
-    frame.onload = () => {
-      // Draw the frame image first
-      context.drawImage(frame, 0, 0, canvas.width + 100, canvas.height);
 
       if (!webcamRef.current) return;
-      context.drawImage(webcamRef.current.video!, 40, 30, canvas.width + 50, canvas.height - 70);
-
-      // Add text
-      context.font = '24px Arial';
-      context.fillStyle = 'white';
-      context.fillText(text, 20, canvas.height - 20);
 
       const paddingX = 20;
       const paddingY = 20;
@@ -107,53 +81,11 @@ function PhotoCapture() {
 
       context.fillText(text, 50, canvas.height - 115);
       const capturedImage = canvas.toDataURL('image/jpeg');
-
       const blob = dataURItoBlob(capturedImage);
       const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
       setImageFile(file);
-
-
-      // Convert the captured image to a Blob
-      const blob = dataURItoBlob(capturedImage);
-      const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
-
-      setImageFile(file);
-
-
       setCaptureStatus('Photo captured successfully!');
     };
-  };
-  const handleCancel = () => {
-    setTakingPhoto(false);
-    setImage(null);
-    setEmail('');
-    setCaptureStatus(null);
-    setImageFile(null);
-  };
-
-  const handleSubmit = () => {
-    if (!imageFile) {
-      console.error('No image file to send.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('image', imageFile);
-
-    formData.append('email', email);
-
-    
-    fetch('your-server-endpoint', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => {
-        // Handle the response from the server
-        console.log('Image sent successfully');
-      })
-      .catch((error) => {
-        console.error('Error sending image:', error);
-      });
   };
 
   const handleCancel = () => {
@@ -180,13 +112,11 @@ function PhotoCapture() {
     })
       .then((response) => {
         console.log('Image sent successfully');
-        setDialogOpen(false);
       })
       .catch((error) => {
         console.error('Error sending image:', error);
       });
   };
-
 
   function dataURItoBlob(dataURI: string) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -200,75 +130,23 @@ function PhotoCapture() {
     return blob;
   }
 
-
   return (
     <StyledPhotoContainer>
       <Button color="primary" variant="outlined" type="button" onClick={handleClickOpen}>
         Take a Photo
       </Button>
 
-      
+      {/* Dialog */}
       <Dialog onClose={handleClose} open={dialogOpen} maxWidth="lg">
         <DialogTitle>Capture Photo</DialogTitle>
         <DialogContent>
           <Webcam audio={false} ref={webcamRef} />
         </DialogContent>
-        <DialogContent sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-        >
-
-          <TextField
-            sx={{
-              width: '400px',
-              textAlign: 'center',
-
-  console.log(imageFile);
-
-  return (
-    <StyledPhotoContainer>
-      {!takingPhoto ? (
-        <Button color="primary" variant="outlined" type="button" onClick={() => setTakingPhoto(true)}>Take a Photo</Button>
-      ) : (
-        <>
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-          />
-          <div style={{
-            display: 'flex',
-            marginTop: '10px',
-            marginBottom: '10px',
-            justifyContent: 'space-between',
-          }}
-          >
-            <Button
-              sx={{
-                marginRight: '10px',
-
-              }}
-              color="primary"
-              variant="outlined"
-              type="button"
-              onClick={capturePhoto}
-            >
-              Capture Photo
-
-            </Button>
-            <Button color="primary" variant="outlined" type="button" onClick={handleCancel}>Cancel</Button>
-          </div>
-          {image && (
-            <StyledCanvas>
-              <img src={image} alt="Captured" />
-            </StyledCanvas>
-          )}
+        <DialogContent>
           <TextField
             sx={{
               marginBottom: '10px',
               width: '400px',
-
             }}
             type="email"
             placeholder="Enter email"
@@ -276,33 +154,20 @@ function PhotoCapture() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </DialogContent>
-        <DialogActions sx={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-        >
-          <Button color="primary" variant="outlined" type="button" onClick={capturePhoto} sx={{}}>
-
-            <CameraAltIcon />
+        <DialogActions>
+          <Button color="primary" variant="outlined" type="button" onClick={capturePhoto}>
+            Capture
           </Button>
           <Button color="primary" variant="outlined" type="button" onClick={handleCancel}>
             Cancel
           </Button>
-          {imageFile && (
           <Button color="primary" variant="outlined" type="button" onClick={handleSubmit}>
             Submit
           </Button>
-          )}
           <Button
             color="primary"
             variant="outlined"
             type="button"
-
-          <Button
-            type="button"
-            color="primary"
-            variant="outlined"
-
             onClick={() => {
               if (imageFile) {
                 const blobUrl = URL.createObjectURL(imageFile);
@@ -316,16 +181,8 @@ function PhotoCapture() {
           >
             Download
           </Button>
-
         </DialogActions>
       </Dialog>
-
-          {imageFile && (
-            <Button color="primary" variant="outlined" type="button" onClick={handleSubmit}>Submit</Button>
-          )}
-        </>
-      )}
-
     </StyledPhotoContainer>
   );
 }
