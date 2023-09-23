@@ -43,6 +43,7 @@
     "react-router-dom": "^6.3.0",
     "react-text-mask": "^5.5.0",
     "react-toastify": "^9.0.7",
+    "react-webcam": "^7.1.1",
     "redux-persist": "^6.0.0",
     "simplebar": "^5.3.8",
     "simplebar-react": "^2.4.1",
