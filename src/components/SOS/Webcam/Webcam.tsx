@@ -18,53 +18,58 @@ const StyledPhotoContainer = styled.div`
 const StyledCanvas = styled.canvas`
   border: 1px solid #ccc;
 `;
-// ... (previous code)
 
 function PhotoCapture() {
   const webcamRef = useRef<Webcam | null>(null);
   const [image, setImage] = useState<string | null>(null);
-  const [email, setEmail] = useState<string>(''); // State variable for user's email
+  const [email, setEmail] = useState<string>('');
   const [captureStatus, setCaptureStatus] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const text = `Astana, Kazakhstan, ${new Date().toLocaleDateString()}}`;
+  const text = `Jerry, Astana, ${new Date().toLocaleDateString()}`;
   const [takingPhoto, setTakingPhoto] = useState<boolean>(false);
   const capturePhoto = () => {
     if (!webcamRef.current) return;
 
     const canvas = document.createElement('canvas');
-    canvas.width = webcamRef.current.video!.videoWidth - 100;
-    canvas.height = webcamRef.current.video!.videoHeight - 70;
+    canvas.width = webcamRef.current.video!.videoWidth;
+    canvas.height = webcamRef.current.video!.videoHeight;
     const context = canvas.getContext('2d')!;
 
+    context.fillStyle = 'black';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
     const frame = new Image();
-    frame.src = '/f.jpg';
+    frame.src = '/frame.png';
 
     frame.onload = () => {
-      // Draw the frame image first
-      context.drawImage(frame, 0, 0, canvas.width + 100, canvas.height);
+      context.drawImage(frame, 0, 0, canvas.width, canvas.height);
 
-      // Capture the webcam feed on top of the frame
       if (!webcamRef.current) return;
-      context.drawImage(webcamRef.current.video!, 40, 30, canvas.width + 50, canvas.height - 70);
 
-      // Add text
-      context.font = '24px Arial';
+      const paddingX = 20;
+      const paddingY = 20;
+      const webcamWidth = canvas.width - 2 * paddingX;
+      const webcamHeight = canvas.height - 2 * paddingY;
+
+      context.drawImage(
+        webcamRef.current.video!,
+        paddingX,
+        paddingY,
+        webcamWidth,
+        webcamHeight,
+      );
+
+      context.font = '24px Roboto';
       context.fillStyle = 'white';
-      context.fillText(text, 20, canvas.height - 20);
-
+      context.fillText(text, 40, canvas.height - 30);
       const capturedImage = canvas.toDataURL('image/jpeg');
-
-      // Convert the captured image to a Blob
       const blob = dataURItoBlob(capturedImage);
       const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
-
       setImageFile(file);
-
       setCaptureStatus('Photo captured successfully!');
     };
   };
   const handleCancel = () => {
-    // Reset the component's state and cancel taking a photo
     setTakingPhoto(false);
     setImage(null);
     setEmail('');
@@ -78,31 +83,23 @@ function PhotoCapture() {
       return;
     }
 
-    // Create a FormData object
     const formData = new FormData();
-    formData.append('image', imageFile);
+    formData.append('file', imageFile);
+    formData.append('to_email', email);
 
-    // Append the user's email to the FormData
-    formData.append('email', email);
-
-    // Now you can send the FormData to your server or wherever you need to send it
-    // You can use AJAX, fetch, or any other method to send the FormData to your server
-
-    // Example using fetch (you would replace 'your-server-endpoint' with the actual endpoint):
-    fetch('your-server-endpoint', {
+    fetch('https://78gxn3hk-8080.euw.devtunnels.ms/api/photo-shoot/send', {
       method: 'POST',
       body: formData,
     })
       .then((response) => {
-        // Handle the response from the server
         console.log('Image sent successfully');
       })
       .catch((error) => {
         console.error('Error sending image:', error);
       });
   };
+  console.log(imageFile);
 
-  // Helper function to convert data URI to Blob
   function dataURItoBlob(dataURI: string) {
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -163,26 +160,36 @@ function PhotoCapture() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Button
-            type="button"
-            color="primary"
-            variant="outlined"
-            onClick={() => {
-              if (imageFile) {
-                const blobUrl = URL.createObjectURL(imageFile);
-                const a = document.createElement('a');
-                a.href = blobUrl;
-                a.download = 'image.jpg';
-                a.click();
-                URL.revokeObjectURL(blobUrl);
-              }
-            }}
+          <div style={{
+            display: 'flex',
+            marginTop: '10px',
+            marginBottom: '10px',
+          }}
           >
-            Download
-          </Button>
-          {imageFile && (
+            <Button
+              type="button"
+              color="primary"
+              sx={{
+                marginRight: '10px',
+              }}
+              variant="outlined"
+              onClick={() => {
+                if (imageFile) {
+                  const blobUrl = URL.createObjectURL(imageFile);
+                  const a = document.createElement('a');
+                  a.href = blobUrl;
+                  a.download = 'image.jpg';
+                  a.click();
+                  URL.revokeObjectURL(blobUrl);
+                }
+              }}
+            >
+              Download
+            </Button>
+            {imageFile && (
             <Button color="primary" variant="outlined" type="button" onClick={handleSubmit}>Submit</Button>
-          )}
+            )}
+          </div>
         </>
       )}
     </StyledPhotoContainer>
