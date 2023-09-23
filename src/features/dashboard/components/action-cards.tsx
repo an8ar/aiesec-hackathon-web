@@ -18,7 +18,11 @@ export function ActionCards() {
       <Card sx={{
         background: 'linear-gradient(to right, #4f7dc1, #34313b)',
         cursor: 'pointer',
+        cursor: 'pointer',
         borderRadius: '16px',
+        ':hover': {
+          opacity: 0.8,
+        },
         ':hover': {
           opacity: 0.8,
         },
@@ -88,6 +92,10 @@ export function ActionCards() {
         <Card sx={{
           background: 'linear-gradient(to right, #449ad6, #303d4d)',
           px: 4,
+          cursor: 'pointer',
+          ':hover': {
+            opacity: 0.8,
+          },
           cursor: 'pointer',
           ':hover': {
             opacity: 0.8,
