@@ -4,9 +4,12 @@ import {
   FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE,
 } from 'redux-persist';
 
+import { eventApi } from '~/api/events/api';
+
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
 const reducers = {
+  [eventApi.reducerPath]: eventApi.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

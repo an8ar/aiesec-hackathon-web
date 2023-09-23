@@ -4,7 +4,11 @@ import { Telegram } from '@mui/icons-material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Box from '@mui/material/Box';
 
-export function BottomButtons() {
+export function BottomButtons({
+  handleClickOpen,
+}: {
+  handleClickOpen: () => void;
+}) {
   return (
     <Box
       sx={{
@@ -29,7 +33,12 @@ export function BottomButtons() {
         background: 'linear-gradient(to right, #4f7dc1, #2aacf2)',
       }}
       >
-        <CameraAltIcon style={{ color: 'white' }} />
+        <CameraAltIcon
+          style={{ color: 'white', cursor: 'pointer' }}
+          onClick={
+          handleClickOpen
+        }
+        />
       </Box>
       <Box sx={{
         display: 'flex',

@@ -21,7 +21,13 @@ const StyledCanvas = styled.canvas`
   border: 1px solid #ccc;
 `;
 
-function PhotoCapture() {
+function PhotoCapture({
+  open, setOpen,
+
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const webcamRef = useRef<Webcam | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [email, setEmail] = useState<string>('');
@@ -34,11 +40,11 @@ function PhotoCapture() {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
-    setDialogOpen(true);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setDialogOpen(false);
+    setOpen(false);
   };
 
   const capturePhoto = () => {
@@ -89,7 +95,7 @@ function PhotoCapture() {
   };
 
   const handleCancel = () => {
-    setDialogOpen(false);
+    setOpen(false);
     setImage(null);
     setEmail('');
     setCaptureStatus(null);
@@ -132,17 +138,18 @@ function PhotoCapture() {
 
   return (
     <StyledPhotoContainer>
-      <Button color="primary" variant="outlined" type="button" onClick={handleClickOpen}>
-        Take a Photo
-      </Button>
 
       {/* Dialog */}
-      <Dialog onClose={handleClose} open={dialogOpen} maxWidth="lg">
+      <Dialog onClose={handleClose} open={open} maxWidth="lg">
         <DialogTitle>Capture Photo</DialogTitle>
         <DialogContent>
           <Webcam audio={false} ref={webcamRef} />
         </DialogContent>
-        <DialogContent>
+        <DialogContent sx={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+        >
           <TextField
             sx={{
               marginBottom: '10px',
@@ -154,16 +161,28 @@ function PhotoCapture() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{
+          display: 'flex',
+          justifyContent: 'center',
+
+        }}
+        >
           <Button color="primary" variant="outlined" type="button" onClick={capturePhoto}>
             Capture
           </Button>
-          <Button color="primary" variant="outlined" type="button" onClick={handleCancel}>
+          <Button
+            color="primary"
+            variant="outlined"
+            type="button"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
+          { imageFile && (
           <Button color="primary" variant="outlined" type="button" onClick={handleSubmit}>
             Submit
           </Button>
+          )}
           <Button
             color="primary"
             variant="outlined"

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { Yourself } from '~/components/CreateByYourself/Yourself';
 import { MiscRoutes } from '~/pages/misc';
 import { lazyImport } from '~/utils/lazyImport';
 
@@ -12,6 +13,7 @@ export function AppRoutes() {
     <BrowserRouter basename={import.meta.env.VITE_PUBLIC_URL}>
       <Routes>
         {MiscRoutes}
+        <Route path="/create" element={<Yourself />} key="your" />
         <Route path="*" element={<Page404 />} key="404" />
       </Routes>
     </BrowserRouter>
