@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
-import { Map } from '~/features/map';
+import { MapCard, MapDrawer } from '~/features/map';
+import { Qrcode } from '~/features/qrcode';
 
 import { ActionCards } from './action-cards';
 import { AdvertisementCard } from './advertisement-card';
 
 export function Dashboard() {
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <Box sx={{
       display: 'flex', flexDirection: 'column', height: '60vh', gap: 2,
@@ -21,7 +23,16 @@ export function Dashboard() {
       }}
       >
         <ActionCards />
-        <Map />
+        <MapDrawer
+          open={openDrawer}
+          onClose={() => setOpenDrawer(false)}
+          onOpen={() => setOpenDrawer(true)}
+        />
+        <MapCard />
+        <Button onClick={() => setOpenDrawer(true)}>
+          Open Drawer
+        </Button>
+        <Qrcode url="https://www.google.com/" />
       </Box>
       <Box />
     </Box>

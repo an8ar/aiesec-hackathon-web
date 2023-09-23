@@ -7,6 +7,8 @@ import {
   GoogleMap, MarkerF, useLoadScript,
 } from '@react-google-maps/api';
 
+import { nightMode } from './night-mode-props';
+
 const containerStyle = {
   width: '400px',
   height: '400px',
@@ -65,8 +67,11 @@ export const Map = React.memo(() => {
     return <CircularProgress />;
   }
   return (
-    <Box>
-      <Box sx={{ display: 'flex', gap: 2, m: 2 }}>
+    <Box sx={{
+      width: '100%', height: '100%', p: 2,
+    }}
+    >
+      <Box sx={{ display: 'flex', gap: 2 }}>
         <TextField value={destinationName} onChange={(e) => setDestinationName(e.target.value)} />
         <Button variant="contained" onClick={createRoute}>
           Calculate Route
@@ -85,9 +90,11 @@ export const Map = React.memo(() => {
         onLoad={handleMapLoad}
         options={{
           disableDefaultUI: true, // Disable all default user interface components
+          styles: nightMode,
         }}
+
       >
-        <MarkerF position={markerPosition} icon="src/assets/icons8-home-50.png" />
+        <MarkerF position={markerPosition} />
       </GoogleMap>
       <Button variant="contained" onClick={() => map?.panTo(initialCenter)}>
         Go center
