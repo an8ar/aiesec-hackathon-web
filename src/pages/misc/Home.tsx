@@ -8,14 +8,19 @@ import Camera from '~/components/SOS/Webcam/Webcam';
 import { BottomButtons, Dashboard } from '~/features/dashboard';
 
 export function HomePage() {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => setOpen(true);
   return (
     <Page title="Homepage">
       <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <HeaderComponent />
         <Dashboard />
-        <Camera />
+        <Camera open={open} setOpen={setOpen} />
         <div style={{ height: '100vh' }} />
-        <BottomButtons />
+        <BottomButtons handleClickOpen={
+          handleClickOpen
+        }
+        />
       </Container>
     </Page>
   );

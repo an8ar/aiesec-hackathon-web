@@ -6,6 +6,7 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import {
   Box, Card, CardContent, Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export function ActionCards() {
   return (
@@ -94,7 +95,14 @@ export function ActionCards() {
           </Box>
           <CardContent sx={{ mt: 1, p: 0 }}>
             <Typography variant="h5" sx={{ color: 'white' }}>
-              Создай сам
+              <Link
+                to="/create"
+                style={{
+                  textDecoration: 'none', color: 'white', fontSize: 'inherit',
+                }}
+              >
+                Создай сам
+              </Link>
             </Typography>
           </CardContent>
         </Card>
