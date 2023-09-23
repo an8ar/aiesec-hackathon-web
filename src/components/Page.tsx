@@ -17,9 +17,8 @@ export function Page({ children, meta, title }: Props) {
       <Helmet>
         <title>{`${title} | ${APPLICATION_NAME}`}</title>
         {meta}
-        <style>{'body { background-color: #F4F6F8; }'}</style>
+        <style>{'body { background-color: #2d3b4a }'}</style>
       </Helmet>
-
       <Box>{children}</Box>
     </>
   );
