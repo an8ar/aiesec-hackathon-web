@@ -10,7 +10,7 @@ type Props = Omit<SwipeableDrawerProps, 'onOpen'> & {
   onOpen?: VoidFunction;
 };
 
-export function BottomDrawer({
+export function RightDrawer({
   children, onClose, onOpen, ...drawerProps
 }: Props) {
   const handleOnOpen = () => {
@@ -18,7 +18,7 @@ export function BottomDrawer({
   };
 
   return (
-    <DrawerStyle {...drawerProps} onClose={onClose} onOpen={handleOnOpen} anchor="bottom">
+    <DrawerStyle {...drawerProps} onClose={onClose} onOpen={handleOnOpen} anchor="right">
       <ContentStyle>{children}</ContentStyle>
     </DrawerStyle>
   );
@@ -32,6 +32,7 @@ const DrawerStyle = styled(SwipeableDrawer)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     paddingBottom: theme.spacing(3),
+    backgroundColor: '#2d3b4a ',
   },
 }));
 
