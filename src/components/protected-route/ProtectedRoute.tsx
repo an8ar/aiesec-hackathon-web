@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
-import { useAuth } from '~/hooks/useAuth';
 import { PATH_AUTH } from '~/routes/paths';
 
 type Props = {
@@ -14,11 +13,5 @@ export function ProtectedRoute({
   redirectPath = PATH_AUTH.login,
   children,
 }: Props) {
-  const { isLoggedIn } = useAuth();
-
-  if (!isLoggedIn) {
-    return <Navigate to={redirectPath} replace />;
-  }
-
   return children || <Outlet />;
 }

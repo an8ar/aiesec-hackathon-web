@@ -4,10 +4,8 @@ import { Box, useTheme, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import { Iconify } from '~/components/Iconify';
-import { useAuth } from '~/hooks/useAuth';
 
 import { DASHBOARD_HELP_NAVIGATION } from '../constants';
-import { UserMenu } from './UserMenu';
 
 function HeaderIcon({ icon, path }: Record<'icon' | 'path', string>) {
   const theme = useTheme();
@@ -20,14 +18,11 @@ function HeaderIcon({ icon, path }: Record<'icon' | 'path', string>) {
 }
 
 export function HeaderInfo() {
-  const { user } = useAuth();
-
   return (
     <RootStyle>
       {DASHBOARD_HELP_NAVIGATION.map(({ icon, path, title }) => (
         <HeaderIcon icon={icon} path={path} key={title + path} />
       ))}
-      {user && <UserMenu user={user} />}
     </RootStyle>
   );
 }

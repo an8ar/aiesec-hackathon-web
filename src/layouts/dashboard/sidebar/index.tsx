@@ -2,12 +2,9 @@ import React from 'react';
 
 import { Drawer, DrawerProps, styled } from '@mui/material';
 
-import { useAuth } from '~/hooks/useAuth';
-
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
 import SidebarNavigation from './SidebarNavigation';
-import { UserInfoBar } from './UserInfoBar';
 
 type Props = {
   open: boolean;
@@ -15,13 +12,10 @@ type Props = {
 };
 
 export function DashboardSidebar({ open, onCloseSidebar }: Props) {
-  const { user } = useAuth();
-
   // return <RootStyle open={open}>{user && user.first}</RootStyle>;
   return (
     <DrawerStyle open={open}>
       <SidebarHeader onCloseSidebar={onCloseSidebar} />
-      {user && <UserInfoBar user={user} />}
       <SidebarNavigation />
       <SidebarFooter />
     </DrawerStyle>
