@@ -1,46 +1,45 @@
 import React, { useState } from 'react';
 
-import { Tabs, Tab, Box } from '@mui/material';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 // import { useTranslation } from 'react-i18next';
 
 function TabsComponent() {
 //   const { i18n } = useTranslation();
   const [value, setValue] = useState('kz');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+  const handleChange = (e: SelectChangeEvent<string>) => {
+    setValue(e.target.value);
   };
 
   return (
-    <Box
-      sx={{ backgroundColor: 'white', marginLeft: 10 }}
+    <Select
+      value={value}
+      variant="outlined"
+      onChange={handleChange}
+      label="Язык"
+      sx={{
+        backgroundColor: 'white',
+      }}
     >
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        textColor="inherit"
-        indicatorColor="primary"
-        variant="scrollable"
-        scrollButtons="auto"
+      <MenuItem
+        value="kz"
+        sx={{ minWidth: '120px' }}
       >
-        <Tab
-          label="Қазақ тілі"
-          value="kz"
-          sx={{ minWidth: '120px' }}
-          style={{
-            color: 'black',
-          }}
-        />
-        <Tab
-          style={{
-            color: 'black',
-          }}
-          label="Русский язык"
-          value="ru"
-          sx={{ minWidth: '120px' }}
-        />
-      </Tabs>
-    </Box>
+        Қазақ тілі
+      </MenuItem>
+      <MenuItem
+        value="ru"
+        sx={{ minWidth: '120px' }}
+      >
+        Русский язык
+      </MenuItem>
+      <MenuItem
+        value="en"
+        sx={{ minWidth: '120px' }}
+      >
+        English
+      </MenuItem>
+    </Select>
   );
 }
 

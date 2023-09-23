@@ -16,7 +16,7 @@ export default function HeaderComponent() {
 
   useEffect(() => {
     const fetchLocalTime = async () => {
-      const currentTime = new Date().toLocaleTimeString();
+      const currentTime = new Date().toLocaleTimeString(undefined, { timeStyle: 'short' });
       setLocalTime(currentTime);
     };
     const fetchWeatherData = async () => {
@@ -43,56 +43,57 @@ export default function HeaderComponent() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: 'white',
-          color: 'black',
-        }}
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: '#405768',
+        color: 'white',
+      }}
+    >
+      <Toolbar sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        textColor: 'white',
+      }}
       >
-        <Toolbar>
-          {/* Display local time */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {localTime}
-          </Typography>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {localTime}
+        </Typography>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          gap: 4,
+          color: 'white',
+          flexGrow: 1,
+        }}
+        >
           <Typography
             variant="h6"
             component="div"
             sx={{
-              flexGrow: 1,
-              color: 'black',
-            }}
-          >
-            <div style={{
               display: 'flex',
               alignItems: 'center',
             }}
-            >
-              <WifiOutlinedIcon sx={{
-                marginRight: '5px',
-              }}
-              />
-              {' '}
-              Free Wifi
-            </div>
+          >
+            <WifiOutlinedIcon sx={{
+              marginRight: '5px',
+            }}
+            />
+            {' '}
+            Free Wifi
           </Typography>
           <Typography
             variant="h6"
             component="div"
-            sx={{
-              flexGrow: 1,
-              color: 'black',
-
-            }}
           >
-            Weather:
-            {' '}
             {weather}
           </Typography>
           <TabsComponent />
-        </Toolbar>
-      </AppBar>
-    </Box>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }
