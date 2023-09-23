@@ -2,6 +2,7 @@ import React from 'react';
 
 import HeaderComponent from '~/components/Header/Header.component';
 import { Page } from '~/components/Page';
+import Camera from '~/components/SOS/Webcam/Webcam';
 import { Map } from '~/features/map';
 
 export function HomePage() {
@@ -14,6 +15,7 @@ export function HomePage() {
         <HeaderComponent />
       </div>
       <Map />
+      <Camera />
     </Page>
   );
 }
