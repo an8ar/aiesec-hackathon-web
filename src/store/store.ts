@@ -4,9 +4,12 @@ import {
   FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE,
 } from 'redux-persist';
 
+import promotionsApi, { PROMOTIONS_API_REDUCER_KEY } from '~/api/promotions/api';
+
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
 const reducers = {
+  [PROMOTIONS_API_REDUCER_KEY]: promotionsApi.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
