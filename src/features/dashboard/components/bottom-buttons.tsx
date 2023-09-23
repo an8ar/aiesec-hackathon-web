@@ -45,5 +45,6 @@ export function BottomButtons() {
         <Telegram style={{ color: 'white' }} />
       </Box>
     </Box>
+
   );
 }

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
-// import { useTranslation } from 'react-i18next';
 
-function TabsComponent() {
+export function SelectLanguage() {
 //   const { i18n } = useTranslation();
   const [value, setValue] = useState('kz');
 
@@ -18,29 +17,30 @@ function TabsComponent() {
       onChange={handleChange}
       label="Язык"
       sx={{
-        backgroundColor: 'white',
+        backgroundColor: '#293749',
+        color: 'white',
+        padding: 1,
+        maxHeight: 40,
+        '& legend': { display: 'none' },
+        '& fieldset': { top: 0 },
+
       }}
     >
       <MenuItem
         value="kz"
-        sx={{ minWidth: '120px' }}
       >
-        Қазақ тілі
+        KZ
       </MenuItem>
       <MenuItem
         value="ru"
-        sx={{ minWidth: '120px' }}
       >
-        Русский язык
+        RU
       </MenuItem>
       <MenuItem
         value="en"
-        sx={{ minWidth: '120px' }}
       >
-        English
+        EN
       </MenuItem>
     </Select>
   );
 }
-
-export default TabsComponent;

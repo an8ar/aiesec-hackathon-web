@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
-import TabsComponent from './Tabs/TabsComponent';
+import { SelectLanguage } from './Tabs/SelectLanguage';
 
 export default function HeaderComponent() {
   const [localTime, setLocalTime] = useState('');
@@ -48,6 +48,7 @@ export default function HeaderComponent() {
       sx={{
         backgroundColor: '#405768',
         color: 'white',
+        mt: 2,
       }}
     >
       <Toolbar sx={{
@@ -75,6 +76,9 @@ export default function HeaderComponent() {
             component="div"
             sx={{
               display: 'flex',
+              background: '#293749',
+              p: 1,
+              borderRadius: 8,
               alignItems: 'center',
             }}
           >
@@ -88,10 +92,15 @@ export default function HeaderComponent() {
           <Typography
             variant="h6"
             component="div"
+            sx={{
+              background: '#293749',
+              p: 1,
+              borderRadius: 8,
+            }}
           >
             {weather}
           </Typography>
-          <TabsComponent />
+          <SelectLanguage />
         </Box>
       </Toolbar>
     </AppBar>
