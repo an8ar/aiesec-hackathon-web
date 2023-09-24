@@ -1,6 +1,5 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import * as moment from 'moment';
 // Define a service using a base URL and expected endpoints
 export const eventApi = createApi({
   reducerPath: 'eventApi',
@@ -33,7 +32,7 @@ export interface IEvents {
     banner_url: string;
     category: string;
     author: string;
-    datetime: moment.Moment;
+    datetime: string;
     address: string;
     location: string;
     latitude: number;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { MapCard, MapDrawer } from '~/features/map';
 import { Qrcode } from '~/features/qrcode';
@@ -29,9 +29,6 @@ export function Dashboard() {
           onOpen={() => setOpenDrawer(true)}
         />
         <MapCard />
-        <Button onClick={() => setOpenDrawer(true)}>
-          Open Drawer
-        </Button>
         <Qrcode url="https://www.google.com/" />
       </Box>
       <Box />
