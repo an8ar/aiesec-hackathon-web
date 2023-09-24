@@ -26,6 +26,7 @@
     "@react-google-maps/api": "^2.19.2",
     "@reduxjs/toolkit": "^1.8.3",
     "@types/query-string": "^6.3.0",
+    "@types/react-i18next": "^8.1.0",
     "@types/react-swipeable-views": "^0.13.2",
     "@types/react-swipeable-views-utils": "^0.13.4",
     "@types/react-webcam": "^3.0.0",
