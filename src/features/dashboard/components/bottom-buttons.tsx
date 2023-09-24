@@ -5,9 +5,10 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Box from '@mui/material/Box';
 
 export function BottomButtons({
-  handleClickOpen,
+  handleClickOpen, setOpenTelegram,
 }: {
   handleClickOpen: () => void;
+  setOpenTelegram: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <Box
@@ -51,7 +52,14 @@ export function BottomButtons({
         background: 'linear-gradient(to right, #4f7dc1, #2aacf2)',
       }}
       >
-        <Telegram style={{ color: 'white' }} />
+        <Telegram
+          style={{ color: 'white' }}
+          onClick={
+          () => {
+            setOpenTelegram(true);
+          }
+        }
+        />
       </Box>
     </Box>
 
