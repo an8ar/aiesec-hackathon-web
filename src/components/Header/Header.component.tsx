@@ -8,7 +8,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 
-import { SelectLanguage } from './Tabs/SelectLanguage';
+import { SelectJerry } from './Select/SelectJerry';
+import { SelectLanguage } from './Select/SelectLanguage';
 
 export default function HeaderComponent() {
   const [localTime, setLocalTime] = useState('');
@@ -101,6 +102,7 @@ export default function HeaderComponent() {
             {weather}
           </Typography>
           <SelectLanguage />
+          <SelectJerry />
         </Box>
       </Toolbar>
     </AppBar>
