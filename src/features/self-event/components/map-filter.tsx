@@ -10,6 +10,7 @@ import {
 import {
   GoogleMap, MarkerF, useLoadScript,
 } from '@react-google-maps/api';
+import { useTranslation } from 'react-i18next';
 
 import { useGetSelfEventQuery } from '~/api/events/api';
 import promotionsApi from '~/api/promotions/api';
@@ -36,6 +37,7 @@ export const MapFilter = React.memo(({
     isSuccess,
     isFetching,
   } = promotionsApi.endpoints.getPromotions.useQuery({ jerryId: 'jerry3' });
+  const { t } = useTranslation();
   const selectedChoco = deals?.promotions.find((item) => item.id === id);
 
   const jerrys = localStorage.getItem('jerry');
@@ -127,7 +129,7 @@ export const MapFilter = React.memo(({
         }}
         onClick={() => map?.panTo(initialCenter)}
       >
-        Где я?
+        {t('whereAmI')}
       </Button>
       <Box onClick={() => console.log(data?.events[0].latitude)}>
         <Typography sx={{ color: 'white' }}>Показать маршрут на телефон</Typography>

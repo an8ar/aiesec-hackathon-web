@@ -7,11 +7,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import { SelectJerry } from './Select/SelectJerry';
 import { SelectLanguage } from './Select/SelectLanguage';
 
 export default function HeaderComponent() {
+  const { t } = useTranslation();
   const [localTime, setLocalTime] = useState('');
   const [weather, setWeather] = useState('');
 
@@ -88,7 +90,7 @@ export default function HeaderComponent() {
             }}
             />
             {' '}
-            Free Wifi
+            {t('freeWifi')}
           </Typography>
           <Typography
             variant="h6"

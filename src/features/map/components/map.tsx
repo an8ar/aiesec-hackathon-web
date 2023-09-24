@@ -6,6 +6,7 @@ import {
 import {
   GoogleMap, MarkerF, useLoadScript,
 } from '@react-google-maps/api';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Iconify } from '~/components/Iconify';
@@ -23,6 +24,7 @@ const initialCenter = {
 };
 
 export const Map = React.memo(() => {
+  const { t } = useTranslation();
   const [map, setMap] = useState<null | google.maps.Map>(null);
   const [markerPosition, setMarkerPosition] = useState(initialCenter);
   const [destinationName, setDestinationName] = useState<any>('');
@@ -105,7 +107,7 @@ export const Map = React.memo(() => {
             onClick={() => map?.panTo(initialCenter)}
             sx={{ maxWidth: 200 }}
           >
-            Где я?
+            {t('whereAmI')}
           </Button>
         </Stack>
         <Stack spacing={2} flexGrow={3}>
@@ -114,11 +116,11 @@ export const Map = React.memo(() => {
             onChange={(e) => setDestinationName(e.target.value)}
             variant="outlined"
             color="secondary"
-            placeholder="Куда хотите?"
+            placeholder={t('whereToGo')}
             sx={{ bgcolor: 'white' }}
           />
           <Button variant="contained" onClick={createRoute}>
-            Пошли!
+            {t('go')}
           </Button>
           {distance !== '' && (
             <>

@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
@@ -22,7 +23,7 @@ function SwipeableTextMobileStepper(
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = photos.length;
-
+  const { t } = useTranslation();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -86,7 +87,9 @@ function SwipeableTextMobileStepper(
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
           >
-            Next
+            {
+                t('next')
+            }
             {theme.direction === 'rtl' ? (
               <KeyboardArrowLeft />
             ) : (
@@ -101,7 +104,7 @@ function SwipeableTextMobileStepper(
             ) : (
               <KeyboardArrowLeft />
             )}
-            Back
+            {t('back')}
           </Button>
         )}
       />
