@@ -6,7 +6,7 @@ import HeaderComponent from '~/components/Header/Header.component';
 import { Page } from '~/components/Page';
 import { SelfEvent } from '~/features/self-event';
 
-export function SelfEventPage() {
+export function SelfEventsPage() {
   return (
     <Page title="SelfEvent">
       <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

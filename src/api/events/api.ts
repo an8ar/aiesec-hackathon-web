@@ -10,6 +10,11 @@ export const eventApi = createApi({
         jerryId: string,
       ) => `/event/filter?jerry_id=${jerryId}&categories=sxodim`,
     }),
+    getSelfEvent: builder.query<IEventsSolo, string>({
+      query: (
+        jerryId: string,
+      ) => `/event/filter?jerry_id=${jerryId}&categories=self-made      `,
+    }),
     postSelfEvent: builder.mutation<any, any>({
       query: (body) => ({
         url: '/event/create',
@@ -20,7 +25,7 @@ export const eventApi = createApi({
   }),
 });
 
-export const { useGetEventsQuery, usePostSelfEventMutation } = eventApi;
+export const { useGetEventsQuery, usePostSelfEventMutation, useGetSelfEventQuery } = eventApi;
 
 export interface IEventsSolo{
     events: IEvents[];
