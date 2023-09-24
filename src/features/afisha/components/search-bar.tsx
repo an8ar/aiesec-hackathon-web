@@ -5,8 +5,28 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {
   Box, Chip, IconButton, InputAdornment, TextField,
 } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+
+import { formatDate } from '~/utils/formatDate';
+import { getFollowingDay } from '~/utils/getFollowingDay';
 
 export function SearchBar() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentDate = new Date();
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value !== '') {
+      searchParams.set('search', e.target.value);
+    } else {
+      searchParams.delete('search');
+    }
+    setSearchParams(searchParams);
+  };
+
+  const textFieldValue = searchParams.get('search');
+
+  const date = searchParams.get('date');
   return (
     <Box sx={{
       display: 'flex',
@@ -20,21 +40,30 @@ export function SearchBar() {
     >
       <TextField
         id="outlined-start-adornment"
+        value={textFieldValue}
         sx={{
           flexGrow: 1,
-          border: 'white',
+          color: 'white',
           '& label.Mui-focused': {
             color: 'white',
           },
-          '& label.Mui-default': {
-            color: 'white',
+          '& .MuiInput-underline:after': {
+            borderBottomColor: 'white',
           },
           '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'white',
+            },
+            '&:hover fieldset': {
+              borderColor: 'white',
+            },
             '&.Mui-focused fieldset': {
               borderColor: 'white',
             },
           },
-          borderColor: 'white',
+          input: {
+            color: 'white',
+          },
         }}
         InputProps={{
           endAdornment:
@@ -42,7 +71,7 @@ export function SearchBar() {
     <Search style={{ color: 'white' }} />
   </InputAdornment>,
         }}
-        InputLabelProps={{ disabled: true }}
+        onChange={onInputChange}
       />
       <Box sx={{
         display: 'flex',
@@ -62,7 +91,17 @@ export function SearchBar() {
             px: 4,
             py: 2,
             color: 'white',
+            border: date === formatDate(currentDate) ? 1 : 0,
+            borderColor: 'white',
             cursor: 'pointer',
+          }}
+          onClick={() => {
+            if (date === formatDate(currentDate)) {
+              searchParams.delete('date');
+            } else {
+              searchParams.set('date', formatDate(currentDate));
+            }
+            setSearchParams(searchParams);
           }}
         />
         <Chip
@@ -73,18 +112,17 @@ export function SearchBar() {
             px: 4,
             py: 2,
             color: 'white',
+            border: date === formatDate(getFollowingDay(currentDate)) ? 1 : 0,
+            borderColor: 'white',
             cursor: 'pointer',
           }}
-        />
-        <Chip
-          variant="filled"
-          label="Послезавтра"
-          sx={{
-            fontSize: 24,
-            px: 4,
-            py: 2,
-            color: 'white',
-            cursor: 'pointer',
+          onClick={() => {
+            if (date === formatDate(getFollowingDay(currentDate))) {
+              searchParams.delete('date');
+            } else {
+              searchParams.set('date', formatDate(getFollowingDay(currentDate)));
+            }
+            setSearchParams(searchParams);
           }}
         />
       </Box>
