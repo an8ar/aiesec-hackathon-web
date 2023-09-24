@@ -13,7 +13,7 @@ export function AppRoutes() {
     <BrowserRouter basename={import.meta.env.VITE_PUBLIC_URL}>
       <Routes>
         {MiscRoutes}
-        <Route path="/create" element={<Yourself />} key="your" />
+        <Route path="/createSxodim" element={<Yourself />} key="your" />
         <Route path="*" element={<Page404 />} key="404" />
       </Routes>
     </BrowserRouter>
