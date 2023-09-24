@@ -6,9 +6,10 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import {
   Box, Card, CardContent, Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export function ActionCards() {
+  const navigate = useNavigate();
   return (
     <Box sx={{
       display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', gap: 2,
@@ -16,7 +17,15 @@ export function ActionCards() {
     >
       <Card sx={{
         background: 'linear-gradient(to right, #4f7dc1, #34313b)',
+        cursor: 'pointer',
+        cursor: 'pointer',
         borderRadius: '16px',
+        ':hover': {
+          opacity: 0.8,
+        },
+        ':hover': {
+          opacity: 0.8,
+        },
         height: '40%',
         px: 4,
         py: 4,
@@ -46,13 +55,34 @@ export function ActionCards() {
         </CardContent>
       </Card>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 2 }}>
-        <Card sx={{
-          background: 'linear-gradient(to right, #6bb386, #384a4c)',
-          px: 4,
-          borderRadius: '16px',
-          height: '100%',
-          py: 4,
-        }}
+        <Card
+          sx={{
+            background: 'linear-gradient(to right, #6bb386, #384a4c)',
+            px: 4,
+            cursor: 'pointer',
+            ':hover': {
+              opacity: 0.8,
+            },
+            borderRadius: '16px',
+            height: '100%',
+            py: 4,
+
+          }}
+          onClick={() => navigate('/afisha')}
+        <Card
+          sx={{
+            background: 'linear-gradient(to right, #6bb386, #384a4c)',
+            px: 4,
+            cursor: 'pointer',
+            ':hover': {
+              opacity: 0.8,
+            },
+            borderRadius: '16px',
+            height: '100%',
+            py: 4,
+
+          }}
+          onClick={() => navigate('/afisha')}
         >
           <Box sx={{
             display: 'flex',
@@ -76,6 +106,14 @@ export function ActionCards() {
         <Card sx={{
           background: 'linear-gradient(to right, #449ad6, #303d4d)',
           px: 4,
+          cursor: 'pointer',
+          ':hover': {
+            opacity: 0.8,
+          },
+          cursor: 'pointer',
+          ':hover': {
+            opacity: 0.8,
+          },
           borderRadius: '16px',
           height: '100%',
           py: 4,
