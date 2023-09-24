@@ -113,11 +113,7 @@ export default function CardList({ promotions }:Props) {
                     title={promotion.address}
                   >
                     <p>
-                      До
-                      {' '}
                       {promotion.address}
-                      {' '}
-                      %
                     </p>
                   </Tooltip>
                   <IconButton
@@ -128,6 +124,10 @@ export default function CardList({ promotions }:Props) {
                       backgroundColor: '#293749',
                       borderRadius: '50%',
                       color: 'white',
+                      ':hover': {
+                        opacity: 0.9,
+                        backgroundColor: '#293749',
+                      },
                     }}
                     onClick={
             () => {

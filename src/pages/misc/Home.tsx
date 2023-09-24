@@ -16,7 +16,6 @@ export function HomePage() {
         <HeaderComponent />
         <Dashboard />
         <Camera open={open} setOpen={setOpen} />
-        <div style={{ height: '100vh' }} />
         <BottomButtons handleClickOpen={
           handleClickOpen
         }

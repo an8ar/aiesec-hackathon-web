@@ -33,9 +33,7 @@ export function SearchBar() {
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: 2,
-      py: 1,
-      px: 2,
-      background: 'linear-gradient(to right, #4f7dc1, #34313b)',
+
     }}
     >
       <TextField
