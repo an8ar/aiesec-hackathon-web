@@ -6,11 +6,12 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Box from '@mui/material/Box';
 
 export function BottomButtons({
-  handleClickOpen,
+  handleClickOpen, setOpenTelegram,
   handleOpenSupport,
 }: {
   handleClickOpen: () => void;
   handleOpenSupport: VoidFunction;
+  setOpenTelegram: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <Box
@@ -44,16 +45,18 @@ export function BottomButtons({
           style={{ color: 'white', cursor: 'pointer' }}
         />
       </Box>
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 50,
-        height: 50,
-        cursor: 'pointer',
-        borderRadius: '50%',
-        background: 'linear-gradient(to right, #4f7dc1, #2aacf2)',
-      }}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 50,
+          height: 50,
+          cursor: 'pointer',
+          borderRadius: '50%',
+          background: 'linear-gradient(to right, #4f7dc1, #2aacf2)',
+        }}
+        onClick={() => setOpenTelegram(true)}
       >
         <Telegram style={{ color: 'white' }} />
       </Box>

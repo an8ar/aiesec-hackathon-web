@@ -11,6 +11,8 @@ import {
 import Webcam from 'react-webcam';
 import styled from 'styled-components';
 
+import SwipeableTextMobileStepper from '../Webcam/Carousel';
+
 const StyledPhotoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +25,7 @@ const StyledCanvas = styled.canvas`
   border: 1px solid #ccc;
 `;
 
-function PhotoCapture({
+function TelCam({
   open, setOpen,
 
 }: {
@@ -47,11 +49,10 @@ function PhotoCapture({
   const [email, setEmail] = useState<string>('');
   const [captureStatus, setCaptureStatus] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const text2 = 'J E R R Y 💞';
-  const text = ` Astana,  ${new Date().getFullYear()}`;
-
   // State for dialog open/close
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('string');
+  console.log(selectedImage);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -65,26 +66,44 @@ function PhotoCapture({
     if (!webcamRef.current) return;
 
     const canvas = document.createElement('canvas');
-    canvas.width = webcamRef.current.video!.videoWidth * 2;
-    canvas.height = webcamRef.current.video!.videoHeight * 2;
+    const maxWidth = 270; // Set your desired maximum width
+    const maxHeight = 120; // Set your desired maximum height
+    const { videoWidth } = webcamRef.current.video!;
+    const { videoHeight } = webcamRef.current.video!;
+
+    // Calculate the new dimensions while maintaining the aspect ratio
+    let newWidth = videoWidth;
+    let newHeight = videoHeight;
+
+    if (videoWidth > maxWidth) {
+      newWidth = maxWidth;
+      newHeight = (videoHeight * maxWidth) / videoWidth;
+    }
+
+    if (newHeight > maxHeight) {
+      newWidth = (videoWidth * maxHeight) / videoHeight;
+      newHeight = maxHeight;
+    }
+
+    canvas.width = newWidth;
+    canvas.height = newHeight;
     const context = canvas.getContext('2d')!;
 
     context.fillStyle = 'black';
-
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, newWidth, newHeight);
 
     const frame = new Image();
-    frame.src = '/go.png';
+    frame.src = selectedImage;
 
     frame.onload = () => {
-      context.drawImage(frame, 0, 0, canvas.width, canvas.height);
+      context.drawImage(frame, 0, 0, newWidth, newHeight);
 
       if (!webcamRef.current) return;
 
       const paddingX = 20;
       const paddingY = 20;
-      const webcamWidth = canvas.width - 2 * paddingX;
-      const webcamHeight = canvas.height - 2 * paddingY;
+      const webcamWidth = newWidth - 2 * paddingX;
+      const webcamHeight = newHeight - 2 * paddingY;
       context.imageSmoothingEnabled = true;
       context.drawImage(
         webcamRef.current.video!,
@@ -94,12 +113,6 @@ function PhotoCapture({
         webcamHeight,
       );
 
-      context.font = '72px Pacifico, cursive ';
-      context.fillStyle = 'pink';
-      context.fillText(text2, 50, canvas.height - 50);
-      context.font = '36px Pacifico, cursive ';
-
-      context.fillText(text, 50, canvas.height - 115);
       const capturedImage = canvas.toDataURL('image/jpeg');
       const blob = dataURItoBlob(capturedImage);
       const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
@@ -167,7 +180,16 @@ function PhotoCapture({
           alignItems: 'center',
         }}
         >
-
+          <SwipeableTextMobileStepper setSelectedImage={setSelectedImage} />
+          {
+            selectedImage && (
+            <div>
+              selected image is
+              {' '}
+              {selectedImage}
+            </div>
+            )
+          }
           <TextField
             sx={{
               marginBottom: '10px',
@@ -225,4 +247,4 @@ function PhotoCapture({
   );
 }
 
-export default PhotoCapture;
+export default TelCam;
