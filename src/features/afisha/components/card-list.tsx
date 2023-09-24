@@ -6,6 +6,8 @@ import {
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
+import { MapFilter } from '~/components/CreateByYourself/Filter/MapFilter';
+import { RightDrawer } from '~/components/right-drawer';
 import { StarRatings } from '~/components/StarRatings';
 import { getFormattedTime } from '~/utils/getFormattedTime';
 
@@ -67,6 +69,12 @@ export default function CardList({ promotions }:Props) {
       setPromitions(promotions); // Set promotions when there's no search query
     }
   }, [dateQuery, promotions]);
+  const [open, setOpen] = React.useState(false);
+  const onClose = () => {
+    setOpen(false);
+  };
+  const [id, setId] = React.useState('' as string);
+
   return (
 
     <Box>
@@ -112,14 +120,21 @@ export default function CardList({ promotions }:Props) {
                       %
                     </p>
                   </Tooltip>
-                  <IconButton sx={{
-                    position: 'absolute',
-                    top: 10,
-                    right: 4,
-                    backgroundColor: '#293749',
-                    borderRadius: '50%',
-                    color: 'white',
-                  }}
+                  <IconButton
+                    sx={{
+                      position: 'absolute',
+                      top: 10,
+                      right: 4,
+                      backgroundColor: '#293749',
+                      borderRadius: '50%',
+                      color: 'white',
+                    }}
+                    onClick={
+            () => {
+              setOpen(true);
+              setId(promotion.id);
+            }
+          }
                   >
                     <RouteIcon />
                   </IconButton>
@@ -200,6 +215,13 @@ export default function CardList({ promotions }:Props) {
             </Box>
           )
             }
+      <RightDrawer
+        open={open}
+        onClose={onClose}
+        onOpen={() => setOpen(true)}
+      >
+        <MapFilter id={id} />
+      </RightDrawer>
     </Box>
   );
 }

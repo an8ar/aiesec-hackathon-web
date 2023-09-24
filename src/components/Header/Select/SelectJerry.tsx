@@ -15,6 +15,8 @@ export function SelectJerry() {
   };
 
   const selectValue = searchParams.get('jerryId') ?? '';
+  const jerrys = JERRYS.find((item) => item.ID === selectValue);
+  localStorage.setItem('jerry', JSON.stringify(jerrys));
 
   return (
     <FormControl
