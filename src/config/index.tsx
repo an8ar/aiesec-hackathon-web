@@ -1,2 +1,2 @@
-export const API_URL = import.meta.env.VITE_API_URL;
+export const API_URL = 'https://78gxn3hk-8080.euw.devtunnels.ms/api';
 export const APPLICATION_NAME = 'JERRY';
