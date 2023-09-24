@@ -26,7 +26,6 @@ export function SelectJerry() {
 
   useEffect(() => {
     if (jerrySelect) {
-      console.log('run');
       searchParams.set('jerryId', jerrySelect.ID);
       setSearchParams(searchParams);
     }

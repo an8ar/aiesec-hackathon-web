@@ -7,11 +7,12 @@ import promotionsApi from '~/api/promotions/api';
 import { Iconify } from '~/components/Iconify';
 
 import CardList from './card-list';
-import CardSkeleton from './card-skeleton';
+import { CardSkeleton } from './card-skeleton';
 import { SearchBar } from './search-bar';
 
 export function Afisha() {
   const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const jerryId = searchParams.get('jerryId');

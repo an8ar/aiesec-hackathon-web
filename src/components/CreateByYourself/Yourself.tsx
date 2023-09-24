@@ -4,7 +4,7 @@ import { Container, IconButton, Box } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useGetEventsQuery } from '~/api/events/api';
-import { SearchBar } from '~/features/afisha';
+import { CardSkeleton, SearchBar } from '~/features/afisha';
 
 import HeaderComponent from '../Header/Header.component';
 import { Iconify } from '../Iconify';
@@ -17,7 +17,7 @@ export function Yourself() {
   const jerryId = searchParams.get('jerryId');
 
   const {
-    data = { events: [] }, isLoading, isError, isSuccess,
+    data = { events: [] }, isFetching, isError, isSuccess,
   } = useGetEventsQuery(jerryId as string, { skip: jerryId === null });
   return (
     <Page title="Sxodim">
@@ -30,6 +30,7 @@ export function Yourself() {
         </Box>
         <Box>
           <SearchBar />
+          {isFetching && <CardSkeleton />}
           {isSuccess
         && <CardList eventsList={data.events} />}
         </Box>
