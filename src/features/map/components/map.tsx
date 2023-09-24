@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
 import {
-  Box, Button, CircularProgress, TextField, Typography, Stack,
+  Box, Button, CircularProgress, TextField, Typography, Stack, IconButton,
 } from '@mui/material';
 import {
   GoogleMap, MarkerF, useLoadScript,
 } from '@react-google-maps/api';
+import { useNavigate } from 'react-router-dom';
+
+import { Iconify } from '~/components/Iconify';
 
 import { nightMode } from './night-mode-props';
 
@@ -23,7 +26,7 @@ export const Map = React.memo(() => {
   const [map, setMap] = useState<null | google.maps.Map>(null);
   const [markerPosition, setMarkerPosition] = useState(initialCenter);
   const [destinationName, setDestinationName] = useState<any>('');
-
+  const navigate = useNavigate();
   const [directionsRenderer,
     setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
 
@@ -74,65 +77,72 @@ export const Map = React.memo(() => {
     return <CircularProgress />;
   }
   return (
-    <Box sx={{
-      width: '100%', height: '100%', p: 2, display: 'flex', gap: 2,
-    }}
-    >
-      <Stack spacing={2} flexGrow={4}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={initialCenter}
-          zoom={14}
-          onLoad={handleMapLoad}
-          options={{
-            disableDefaultUI: true, // Disable all default user interface components
-            styles: nightMode,
-          }}
-        >
-          <MarkerF position={markerPosition} />
-          {distance && <MarkerF position={destinationLocation} />}
-        </GoogleMap>
-        <Button
-          variant="contained"
-          onClick={() => map?.panTo(initialCenter)}
-          sx={{ maxWidth: 200 }}
-        >
-          Где я?
-        </Button>
-      </Stack>
-      <Stack spacing={2} flexGrow={3}>
-        <TextField
-          value={destinationName}
-          onChange={(e) => setDestinationName(e.target.value)}
-          variant="outlined"
-          color="secondary"
-          placeholder="Куда хотите?"
-          sx={{ bgcolor: 'white' }}
-        />
-        <Button variant="contained" onClick={createRoute}>
-          Пошли!
-        </Button>
-        {distance !== '' && (
-        <>
-          <Typography sx={{ color: 'white', width: '100%' }}>
-            Расстояние:
-            {' '}
-            {distance}
-          </Typography>
-          <Typography sx={{ color: 'white' }}>
-            Время:
-            {' '}
-            {duration}
+    <Box>
+      <IconButton onClick={() => navigate('/')}>
+        <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
+      </IconButton>
+      <Box sx={{
+        width: '100%', height: '100%', p: 2, display: 'flex', gap: 2,
+      }}
+      >
+        <Stack spacing={2} flexGrow={4}>
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={initialCenter}
+            zoom={14}
+            onLoad={handleMapLoad}
+            options={{
+              zoom: 14,
+              styles: nightMode,
+            }}
+          >
 
-          </Typography>
-          <Button variant="contained" onClick={clearRoute}>
-            Удалить Маршрут
+            <MarkerF position={markerPosition} />
+            {distance && <MarkerF position={destinationLocation} />}
+          </GoogleMap>
+          <Button
+            variant="contained"
+            onClick={() => map?.panTo(initialCenter)}
+            sx={{ maxWidth: 200 }}
+          >
+            Где я?
           </Button>
-        </>
-        )}
+        </Stack>
+        <Stack spacing={2} flexGrow={3}>
+          <TextField
+            value={destinationName}
+            onChange={(e) => setDestinationName(e.target.value)}
+            variant="outlined"
+            color="secondary"
+            placeholder="Куда хотите?"
+            sx={{ bgcolor: 'white' }}
+          />
+          <Button variant="contained" onClick={createRoute}>
+            Пошли!
+          </Button>
+          {distance !== '' && (
+            <>
+              <Typography sx={{ color: 'white', width: '100%' }}>
+                Расстояние:
+                {' '}
+                {distance}
+              </Typography>
+              <Typography sx={{ color: 'white' }}>
+                Время:
+                {' '}
+                {duration}
 
-      </Stack>
+              </Typography>
+              <Button variant="contained" onClick={clearRoute}>
+                Удалить Маршрут
+              </Button>
+            </>
+          )}
 
+        </Stack>
+
+      </Box>
     </Box>
+
   );
 });
