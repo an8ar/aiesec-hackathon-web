@@ -2,7 +2,7 @@
 import React from 'react';
 
 import {
-  MenuItem, Paper, TextField, Typography, CircularProgress, Button,
+  Paper, TextField, Typography, CircularProgress, Button,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
@@ -54,28 +54,6 @@ export function Filter() {
         marginTop: '20px',
       }}
       >
-        <TextField
-          id="outlined-select-currency"
-          select
-          sx={{
-            width: '400px',
-            marginBottom: '20px',
-          }}
-          label="Select a City"
-          variant="outlined"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          fullWidth
-        >
-          {jerries.map((option) => (
-            <MenuItem
-              key={option.value}
-              value={option.value}
-            >
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
         <DatePicker
           label="Select a Date"
           value={selectedDate}
@@ -163,9 +141,9 @@ export function Filter() {
                   setId(event.id);
                 }}
                 sx={{ marginTop: '20px' }}
+                variant="contained"
               >
-                Open Right Drawer
-
+                Построить маршрут
               </Button>
             </div>
           </Paper>
