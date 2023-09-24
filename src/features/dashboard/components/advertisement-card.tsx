@@ -20,7 +20,7 @@ export function AdvertisementCard({ link }:{link: string}) {
         image={link}
         alt="Фото карточка"
         width="100%"
-        height="100%"
+        height="300px"
         style={{ objectFit: 'cover' }}
       />
     </Card>

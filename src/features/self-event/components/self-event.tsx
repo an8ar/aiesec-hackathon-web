@@ -2,12 +2,14 @@
 import React from 'react';
 
 import {
-  MenuItem, Paper, TextField, Typography, CircularProgress, Button,
+  MenuItem, Paper, TextField, Typography, CircularProgress, Button, Box, IconButton,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 import { IEvents, useGetSelfEventQuery } from '~/api/events/api';
+import { Iconify } from '~/components/Iconify';
 import { RightDrawer } from '~/components/right-drawer';
 
 import { MapFilter } from './map-filter';
@@ -35,6 +37,7 @@ export function SelfEvent() {
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
   const [value, setValue] = React.useState('jerry3');
   const { data, isLoading, isError } = useGetSelfEventQuery(value);
+  const navigate = useNavigate();
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
@@ -45,8 +48,11 @@ export function SelfEvent() {
   const [id, setId] = React.useState('' as string);
 
   return (
-    <div>
-      <div style={{
+    <Box>
+      <IconButton onClick={() => navigate('/')}>
+        <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
+      </IconButton>
+      <Box style={{
         display: 'flex',
         justifyContent: 'center',
         gap: '20px',
@@ -93,9 +99,9 @@ export function SelfEvent() {
             />
           )}
         />
-      </div>
+      </Box>
 
-      <div style={{
+      <Box style={{
         marginTop: '20px',
         display: 'flex',
         flexWrap: 'wrap',
@@ -140,7 +146,7 @@ export function SelfEvent() {
             <Typography variant="body1" gutterBottom>
               {moment(event.datetime).format('MMMM Do YYYY, h:mm a')}
             </Typography>
-            <div style={{ flex: '1' }}>
+            <Box style={{ flex: '1' }}>
               <Typography variant="body1" gutterBottom>
                 {event.city}
                 ,
@@ -167,7 +173,7 @@ export function SelfEvent() {
                 Open Right Drawer
 
               </Button>
-            </div>
+            </Box>
           </Paper>
         ))}
         <RightDrawer
@@ -177,7 +183,7 @@ export function SelfEvent() {
         >
           <MapFilter id={id} value={value} />
         </RightDrawer>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

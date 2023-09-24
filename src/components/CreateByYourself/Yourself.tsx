@@ -1,18 +1,19 @@
 import React from 'react';
 
-import { Container } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { Container, IconButton, Box } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useGetEventsQuery } from '~/api/events/api';
 import { SearchBar } from '~/features/afisha';
 
 import HeaderComponent from '../Header/Header.component';
+import { Iconify } from '../Iconify';
 import { Page } from '../Page';
 import { CardList } from './Filter/CardList';
 
 export function Yourself() {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const navigate = useNavigate();
   const jerryId = searchParams.get('jerryId');
 
   const {
@@ -22,9 +23,16 @@ export function Yourself() {
     <Page title="Sxodim">
       <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <HeaderComponent />
-        <SearchBar />
-        {isSuccess
+        <Box>
+          <IconButton onClick={() => navigate('/')}>
+            <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
+          </IconButton>
+        </Box>
+        <Box>
+          <SearchBar />
+          {isSuccess
         && <CardList eventsList={data.events} />}
+        </Box>
       </Container>
     </Page>
   );
