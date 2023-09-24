@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react';
 
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Paper, Typography, CircularProgress, Button, Box, IconButton,
+  Paper, Typography, CircularProgress, Button, Box, IconButton, Accordion, AccordionSummary, AccordionDetails,
 } from '@mui/material';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { IEvents, useGetSelfEventQuery } from '~/api/events/api';
 import { Iconify } from '~/components/Iconify';
 import { RightDrawer } from '~/components/right-drawer';
-
-import { Qrcode } from 'features/qrcode';
+import { Qrcode } from '~/features/qrcode';
 
 import { MapFilter } from './map-filter';
 
@@ -49,19 +49,12 @@ export function SelfEvent() {
   const [id, setId] = React.useState('' as string);
 
   return (
-    <Box>
-      <IconButton onClick={() => navigate('/')}>
-        <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
-      </IconButton>
-      <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left' }}>
+      <Box>
 
-        <Typography variant="h5" sx={{ color: 'white' }}>
-          Чтобы добавить свой ивент, перейдите по QR-коду
-        </Typography>
-        <Box onClick={() => navigate('/self-event-form')}>
-          <Qrcode url="http://169.254.37.115:5173/self-event-form" />
-        </Box>
-
+        <IconButton onClick={() => navigate('/')}>
+          <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
+        </IconButton>
       </Box>
 
       <Box style={{
@@ -69,7 +62,7 @@ export function SelfEvent() {
         display: 'flex',
         flexWrap: 'wrap',
         gap: '20px',
-        justifyContent: 'center',
+        justifyContent: 'left',
       }}
       >
         {isLoading && <CircularProgress />}
@@ -79,77 +72,110 @@ export function SelfEvent() {
           </Typography>
         )}
         {data && data.events.filter && data.events.filter((event: IEvents) => { if (selectedDate) return moment(event.datetime).format('MMMM Do YYYY') === moment(selectedDate).format('MMMM Do YYYY'); return true; }).map((event: IEvents) => (
-          <Paper
-            key={event.id}
-            elevation={3}
-            style={{
-              backgroundColor: '#405768',
-              color: 'white',
-              width: '200px',
-              maxHeight: '300px',
-              padding: '20px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              gap: '20px',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'scroll',
-            }}
-          >
-            <img
-              src={event.banner_url}
-              alt="event"
+          <Box sx={{}}>
+
+            <Paper
+              key={event.id}
+              elevation={3}
               style={{
-                width: '100%',
+                backgroundColor: '#405768',
+                color: 'white',
                 borderRadius: '8px',
-
+                marginBottom: '20px',
+                maxHeight: '250px',
+                display: 'flex',
+                position: 'relative',
+                flexDirection: 'column',
+                overflow: 'scroll',
               }}
-            />
-            <Typography variant="h6" gutterBottom>
-              {event.title}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {moment(event.datetime).format('MMMM Do YYYY, h:mm a')}
-            </Typography>
-            <Box style={{ flex: '1' }}>
-              <Typography variant="body1" gutterBottom>
-                {event.city}
-                ,
-                {' '}
-                {event.address}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  marginTop: '20px',
-                }}
-              >
-                Расстояние от вас:
-                {' '}
-                {event.distance}
-              </Typography>
-              <Button
-                onClick={() => {
-                  setOpen(true);
-                  setId(event.id);
-                }}
-                sx={{ marginTop: '20px' }}
-              >
-                Открыть Маршрут
+            >
+              <img
+                src={event.banner_url}
+                alt="event"
+                style={{
+                  width: '100%',
+                  maxHeight: '100px',
+                  borderRadius: '8px',
+                  objectFit: 'cover',
 
-              </Button>
-            </Box>
-          </Paper>
+                }}
+              />
+              <Typography variant="h6" gutterBottom>
+                {event.title}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {moment(event.datetime).format('MMMM Do YYYY, h:mm a')}
+              </Typography>
+              <Box style={{ flex: '1' }}>
+                <Typography variant="body1" gutterBottom>
+                  {event.city}
+                  ,
+                  {' '}
+                  {event.address}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    marginTop: '20px',
+                  }}
+                >
+                  Расстояние от вас:
+                  {' '}
+                  {event.distance}
+                </Typography>
+                <Button
+                  onClick={() => {
+                    setOpen(true);
+                    setId(event.id);
+                  }}
+                  sx={{ marginTop: '20px', color: 'white' }}
+                >
+                  <Iconify icon="mdi:navigation" sx={{ width: 24, height: 24, color: 'green' }} />
+
+                  <Typography variant="caption">
+                    Открыть Маршрут
+                  </Typography>
+
+                </Button>
+
+              </Box>
+            </Paper>
+          </Box>
+
         ))}
-        <RightDrawer
-          open={open}
-          onClose={onClose}
-          onOpen={() => setOpen(true)}
-        >
-          <MapFilter id={id} value={value} />
-          QR
-        </RightDrawer>
       </Box>
+      <Box sx={{ mb: 20 }}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Хотите рекламу?</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+
+              <Typography variant="h5">
+                Чтобы добавить свой ивент, перейдите по QR-коду
+              </Typography>
+              <Box onClick={() => navigate('/self-event-form')}>
+                <Qrcode url="http://169.254.37.115:5173/self-event-form" />
+              </Box>
+
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+
+      <RightDrawer
+        open={open}
+        onClose={onClose}
+        onOpen={() => setOpen(true)}
+      >
+        <MapFilter id={id} value={value} />
+        QR
+      </RightDrawer>
     </Box>
   );
 }
