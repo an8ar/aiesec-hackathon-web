@@ -18,11 +18,7 @@ export function ActionCards() {
       <Card sx={{
         background: 'linear-gradient(to right, #4f7dc1, #34313b)',
         cursor: 'pointer',
-        cursor: 'pointer',
         borderRadius: '16px',
-        ':hover': {
-          opacity: 0.8,
-        },
         ':hover': {
           opacity: 0.8,
         },
@@ -69,20 +65,6 @@ export function ActionCards() {
 
           }}
           onClick={() => navigate('/afisha')}
-        <Card
-          sx={{
-            background: 'linear-gradient(to right, #6bb386, #384a4c)',
-            px: 4,
-            cursor: 'pointer',
-            ':hover': {
-              opacity: 0.8,
-            },
-            borderRadius: '16px',
-            height: '100%',
-            py: 4,
-
-          }}
-          onClick={() => navigate('/afisha')}
         >
           <Box sx={{
             display: 'flex',
@@ -106,14 +88,10 @@ export function ActionCards() {
         <Card sx={{
           background: 'linear-gradient(to right, #449ad6, #303d4d)',
           px: 4,
-          cursor: 'pointer',
           ':hover': {
             opacity: 0.8,
           },
           cursor: 'pointer',
-          ':hover': {
-            opacity: 0.8,
-          },
           borderRadius: '16px',
           height: '100%',
           py: 4,
