@@ -85,13 +85,15 @@ export function SelfEvent() {
             style={{
               backgroundColor: '#405768',
               color: 'white',
-              width: '400px',
+              width: '200px',
+              maxHeight: '300px',
               padding: '20px',
               borderRadius: '8px',
               marginBottom: '20px',
               gap: '20px',
               display: 'flex',
               flexDirection: 'column',
+              overflow: 'scroll',
             }}
           >
             <img
@@ -133,7 +135,7 @@ export function SelfEvent() {
                 }}
                 sx={{ marginTop: '20px' }}
               >
-                Open Right Drawer
+                Открыть Маршрут
 
               </Button>
             </Box>
@@ -145,6 +147,7 @@ export function SelfEvent() {
           onOpen={() => setOpen(true)}
         >
           <MapFilter id={id} value={value} />
+          QR
         </RightDrawer>
       </Box>
     </Box>

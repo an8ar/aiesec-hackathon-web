@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 
 import {
-  Box, Button, CircularProgress,
+  Box, Button, CircularProgress, Typography,
 } from '@mui/material';
 import {
   GoogleMap, MarkerF, useLoadScript,
@@ -15,6 +15,7 @@ import { useGetSelfEventQuery } from '~/api/events/api';
 import promotionsApi from '~/api/promotions/api';
 import { JERRYS } from '~/constants/jerry';
 import { nightMode } from '~/features/map/components/night-mode-props';
+import { Qrcode } from '~/features/qrcode';
 
 const containerStyle = {
   width: '400px',
@@ -126,8 +127,15 @@ export const MapFilter = React.memo(({
         }}
         onClick={() => map?.panTo(initialCenter)}
       >
-        Go center
+        Где я?
       </Button>
+      <Box onClick={() => console.log(data?.events[0].latitude)}>
+        <Typography>Показать маршрут на телефон</Typography>
+        <Qrcode
+          url={`https://www.google.com/maps/search/?api=1&query=${data?.events[0].latitude},${data?.events[0].longitude}}`}
+        />
+      </Box>
+
     </Box>
   );
 });
