@@ -4,12 +4,15 @@
 /* eslint-disable no-restricted-imports */
 import React, { useState } from 'react';
 
-import { Box, Button, CircularProgress } from '@mui/material';
+import {
+  Box, Button, CircularProgress, Typography,
+} from '@mui/material';
 import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
 
 import { useGetEventsQuery } from '~/api/events/api';
 import promotionsApi from '~/api/promotions/api';
 import { nightMode } from '~/features/map/components/night-mode-props';
+import { Qrcode } from '~/features/qrcode';
 
 const containerStyle = {
   width: '400px',
@@ -77,6 +80,9 @@ export const MapFilter = React.memo(({ id, value }: { id: string; value?: string
         setDuration(res.routes[0].legs[0].duration?.text);
       });
   };
+
+  const [showQR, setShowQR] = useState<boolean>(false);
+
   React.useLayoutEffect(() => {
     if (map) {
       createRoute();
@@ -86,37 +92,48 @@ export const MapFilter = React.memo(({ id, value }: { id: string; value?: string
   if (!isLoaded) {
     return <CircularProgress />;
   }
+
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height: '100%',
-        p: 2,
-      }}
-    >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={initialCenter}
-        zoom={14}
-        onLoad={handleMapLoad}
-        options={{
-          disableDefaultUI: true, // Disable all default user interface components
-          styles: nightMode,
+    <>
+      {!showQR
+      && (
+        <Box sx={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', mt: 2,
         }}
-      >
-        <MarkerF position={markerPosition} />
-      </GoogleMap>
-      <Button
-        variant="contained"
-        style={{
-          display: 'block',
-          margin: '0 auto',
-          marginTop: '10px',
+        >
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={initialCenter}
+            zoom={14}
+            onLoad={handleMapLoad}
+            options={{
+              disableDefaultUI: true, // Disable all default user interface components
+              styles: nightMode,
+            }}
+          >
+            <MarkerF position={markerPosition} />
+          </GoogleMap>
+          <Box sx={{ alignSelf: 'center', mt: 2 }}>
+            <Button variant="contained" color="info" onClick={() => setShowQR(true)}>
+              Хотите получить маршрут на телефон?
+            </Button>
+          </Box>
+        </Box>
+      )}
+      {showQR
+        && (
+        <Box sx={{
+          display: 'flex', justifyContent: 'center', flexDirection: 'column', mt: 1,
         }}
-        onClick={() => map?.panTo(initialCenter)}
-      >
-        Go center
-      </Button>
-    </Box>
+        >
+          <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
+            Ваш маршрут построен:
+          </Typography>
+          <Qrcode
+            url={`https://www.google.com/maps/search/?api=1&query=${data?.events[0].latitude},${data?.events[0].longitude}`}
+          />
+        </Box>
+        )}
+    </>
   );
 });

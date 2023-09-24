@@ -11,9 +11,9 @@ export function Qrcode({ url }:QRProps) {
   return (
     <Box>
       <QRCode
-        size={120}
+        size={400}
         value={url}
-        viewBox="0 0 256 256"
+        viewBox="0 0 400 400"
       />
     </Box>
   );

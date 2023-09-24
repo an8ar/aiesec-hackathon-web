@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { ChevronLeft } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import NearMeIcon from '@mui/icons-material/NearMe';
@@ -11,8 +12,6 @@ import {
 } from '@react-google-maps/api';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-
-import { Iconify } from '~/components/Iconify';
 
 import { nightMode } from './night-mode-props';
 
@@ -83,9 +82,16 @@ export const Map = React.memo(() => {
   }
   return (
     <Box>
-      <IconButton onClick={() => navigate('/')}>
-        <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
-      </IconButton>
+      <Typography
+        sx={{
+          textDecoration: 'underline', color: 'white', display: 'flex', mb: 0.5, cursor: 'pointer',
+        }}
+        variant="h6"
+        onClick={() => navigate('/')}
+      >
+        <ChevronLeft />
+        Назад
+      </Typography>
       <Box sx={{
         width: '100%',
         height: '100%',

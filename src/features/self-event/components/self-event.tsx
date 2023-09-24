@@ -1,46 +1,32 @@
 /* eslint-disable max-len */
 import React from 'react';
 
+import { ChevronLeft } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RouteIcon from '@mui/icons-material/Route';
 import {
-  Paper, Typography, CircularProgress, Button, Box, IconButton, Accordion, AccordionSummary, AccordionDetails,
+  Paper, Typography, Box, Accordion, AccordionSummary, AccordionDetails, IconButton,
 } from '@mui/material';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { IEvents, useGetSelfEventQuery } from '~/api/events/api';
-import { Iconify } from '~/components/Iconify';
 import { RightDrawer } from '~/components/right-drawer';
 import { Qrcode } from '~/features/qrcode';
 
 import { MapFilter } from './map-filter';
 
-const jerries = [
-  {
-    value: 'jerry1',
-    label: 'Almaty 1',
-  },
-  {
-    value: 'jerry2',
-    label: 'Almaty 2',
-  },
-  {
-    value: 'jerry3',
-    label: 'Astana 1',
-  },
-  {
-    value: 'jerry4',
-    label: 'Astana 2',
-  },
-];
-
 export function SelfEvent() {
   const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
+
   const [value, setValue] = React.useState('jerry3');
+
   const { data, isLoading, isError } = useGetSelfEventQuery(value);
+
   const navigate = useNavigate();
+
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
@@ -51,75 +37,87 @@ export function SelfEvent() {
   const [id, setId] = React.useState('' as string);
 
   return (
-    <Box>
-      <IconButton onClick={() => navigate('/')}>
-        <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
-      </IconButton>
-      <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-
-        <Typography variant="h5" sx={{ color: 'white' }}>
-          {t('link')}
+    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left' }}>
+      <Box>
+        <Typography
+          sx={{
+            textDecoration: 'underline', color: 'white', display: 'flex', mb: 0.5, cursor: 'pointer',
+          }}
+          variant="h6"
+          onClick={() => navigate('/')}
+        >
+          <ChevronLeft />
+          Назад
         </Typography>
-        <Box onClick={() => navigate('/self-event-form')}>
-          <Qrcode url="http://169.254.37.115:5173/self-event-form" />
-        </Box>
-
-        <IconButton onClick={() => navigate('/')}>
-          <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
-        </IconButton>
       </Box>
-
       <Box style={{
         marginTop: '20px',
-        display: 'flex',
-        flexWrap: 'wrap',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
         gap: '20px',
-        justifyContent: 'left',
       }}
       >
-        {isLoading && <CircularProgress />}
-        {isError && (
-          <Typography variant="h6" color="error">
-            Something went wrong...
-          </Typography>
-        )}
-        {data && data.events.filter && data.events.filter((event: IEvents) => { if (selectedDate) return moment(event.datetime).format('MMMM Do YYYY') === moment(selectedDate).format('MMMM Do YYYY'); return true; }).map((event: IEvents) => (
-          <Box sx={{}}>
-
-            <Paper
-              key={event.id}
-              elevation={3}
+        {data && data.events.map((event: IEvents) => (
+          <Paper
+            key={event.id}
+            elevation={3}
+            style={{
+              backgroundColor: '#405768',
+              color: 'white',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              maxHeight: '250px',
+              display: 'flex',
+              position: 'relative',
+              flexDirection: 'column',
+              overflow: 'scroll',
+            }}
+          >
+            <img
+              src={event.banner_url}
+              alt="event"
               style={{
-                backgroundColor: '#405768',
-                color: 'white',
+                width: '100%',
+                maxHeight: '100px',
                 borderRadius: '8px',
-                marginBottom: '20px',
-                maxHeight: '250px',
-                display: 'flex',
-                position: 'relative',
-                flexDirection: 'column',
-                overflow: 'scroll',
-              }}
-            >
-              <img
-                src={event.banner_url}
-                alt="event"
-                style={{
-                  width: '100%',
-                  maxHeight: '100px',
-                  borderRadius: '8px',
-                  objectFit: 'cover',
+                objectFit: 'cover',
 
-                }}
-              />
+              }}
+            />
+            <IconButton
+              sx={{
+                position: 'absolute',
+                top: 10,
+                right: 4,
+                backgroundColor: '#293749',
+                borderRadius: '50%',
+                color: 'white',
+                ':hover': {
+                  opacity: 0.9,
+                  backgroundColor: '#293749',
+                },
+              }}
+              onClick={
+            () => {
+              setOpen(true);
+              setId(event.id);
+            }
+          }
+            >
+              <RouteIcon />
+            </IconButton>
+            <Box sx={{ px: 2, mt: 1 }}>
               <Typography variant="h6" gutterBottom>
                 {event.title}
               </Typography>
               <Typography variant="body1" gutterBottom>
+                Создано:
+                {' '}
                 {moment(event.datetime).format('MMMM Do YYYY, h:mm a')}
               </Typography>
               <Box style={{ flex: '1' }}>
                 <Typography variant="body1" gutterBottom>
+                  Адресс:
                   {event.city}
                   ,
                   {' '}
@@ -128,32 +126,16 @@ export function SelfEvent() {
                 <Typography
                   variant="body1"
                   sx={{
-                    marginTop: '20px',
+                    marginTop: '10px',
                   }}
                 >
                   Расстояние от вас:
                   {' '}
                   {event.distance}
                 </Typography>
-                <Button
-                  onClick={() => {
-                    setOpen(true);
-                    setId(event.id);
-                  }}
-                  sx={{ marginTop: '20px', color: 'white' }}
-                >
-                  <Iconify icon="mdi:navigation" sx={{ width: 24, height: 24, color: 'green' }} />
-
-                  <Typography variant="caption">
-                    Открыть Маршрут
-                  </Typography>
-
-                </Button>
-
               </Box>
-            </Paper>
-          </Box>
-
+            </Box>
+          </Paper>
         ))}
       </Box>
       <Box sx={{ mb: 20 }}>
@@ -163,7 +145,7 @@ export function SelfEvent() {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>Хотите рекламу?</Typography>
+            <Typography>Хотите добавить свое событие?</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -179,14 +161,12 @@ export function SelfEvent() {
           </AccordionDetails>
         </Accordion>
       </Box>
-
       <RightDrawer
         open={open}
         onClose={onClose}
         onOpen={() => setOpen(true)}
       >
         <MapFilter id={id} value={value} />
-        QR
       </RightDrawer>
     </Box>
   );

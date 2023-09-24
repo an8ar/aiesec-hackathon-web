@@ -100,6 +100,8 @@ export const MapFilter = React.memo(({
     }
   }, [map]);
 
+  const [showQR, setShowQR] = useState<boolean>(false);
+
   if (!isLoaded) {
     return <CircularProgress />;
   }
@@ -108,36 +110,45 @@ export const MapFilter = React.memo(({
       width: '100%', height: '100%', p: 2,
     }}
     >
-
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={initialCenter}
-        zoom={14}
-        onLoad={handleMapLoad}
-        options={{
-          disableDefaultUI: true, // Disable all default user interface components
-          styles: nightMode,
+      {!showQR
+      && (
+        <Box sx={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
         }}
-
-      >
-        <MarkerF position={markerPosition} />
-      </GoogleMap>
-      <Button
-        variant="contained"
-        style={{
-          display: 'block', margin: '0 auto', marginTop: '10px',
+        >
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={initialCenter}
+            zoom={14}
+            onLoad={handleMapLoad}
+            options={{
+              disableDefaultUI: true, // Disable all default user interface components
+              styles: nightMode,
+            }}
+          >
+            <MarkerF position={markerPosition} />
+          </GoogleMap>
+          <Box sx={{ alignSelf: 'center', mt: 2 }}>
+            <Button variant="contained" color="info" onClick={() => setShowQR(true)}>
+              Хотите получить маршрут на телефон?
+            </Button>
+          </Box>
+        </Box>
+      )}
+      {showQR
+        && (
+        <Box sx={{
+          display: 'flex', justifyContent: 'center', flexDirection: 'column', mt: 1,
         }}
-        onClick={() => map?.panTo(initialCenter)}
-      >
-        {t('whereAmI')}
-      </Button>
-      <Box onClick={() => console.log(data?.events[0].latitude)}>
-        <Typography sx={{ color: 'white' }}>Показать маршрут на телефон</Typography>
-        <Qrcode
-          url={`https://www.google.com/maps/search/?api=1&query=${data?.events[0].latitude},${data?.events[0].longitude}`}
-        />
-      </Box>
-
+        >
+          <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
+            Ваш маршрут построен:
+          </Typography>
+          <Qrcode
+            url={`https://www.google.com/maps/search/?api=1&query=${data?.events[0].latitude},${data?.events[0].longitude}`}
+          />
+        </Box>
+        )}
     </Box>
   );
 });
