@@ -7,6 +7,7 @@ import { Page } from '~/components/Page';
 import TelCam from '~/components/SOS/TelCam/TelCam';
 import Camera from '~/components/SOS/Webcam/Webcam';
 import { BottomButtons, Dashboard } from '~/features/dashboard';
+import { SupportDialog } from '~/features/support';
 
 export function HomePage() {
   const [open, setOpen] = React.useState(false);
@@ -24,6 +25,7 @@ export function HomePage() {
         <Dashboard />
         <Camera open={open} setOpen={setOpen} />
         <TelCam open={openTelegram} setOpen={setOpenTelegram} />
+        <SupportDialog open={openSupport} onClose={() => setOpenSupport(false)} />
         <div style={{ height: '100vh' }} />
         <BottomButtons
           handleClickOpen={
