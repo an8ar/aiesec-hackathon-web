@@ -11,6 +11,7 @@ const { HomePage } = lazyImport(() => import('./Home'), 'HomePage');
 const { AfishaPage } = lazyImport(() => import('./Afisha'), 'AfishaPage');
 const { MapPage } = lazyImport(() => import('./Map'), 'MapPage');
 const { AfishaPage } = lazyImport(() => import('./Afisha'), 'AfishaPage');
+
 export const MiscRoutes = [
   <Route path="/" element={<HomePage />} key="home" />,
   <Route path="/403" element={<Page403 />} key="403" />,
