@@ -1,7 +1,7 @@
 import React from 'react';
 
+import CelebrationIcon from '@mui/icons-material/Celebration';
 import DiscountIcon from '@mui/icons-material/Discount';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import {
   Box, Card, CardContent, Typography,
@@ -89,33 +89,36 @@ export function ActionCards() {
             </Typography>
           </CardContent>
         </Card>
-        <Card sx={{
-          background: 'linear-gradient(to right, #449ad6, #303d4d)',
-          px: 4,
-          ':hover': {
-            opacity: 0.8,
-          },
-          cursor: 'pointer',
-          borderRadius: '16px',
-          height: '100%',
-          py: 4,
-        }}
-        >
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 50,
-            height: 50,
-            borderRadius: '50%',
-            background: 'linear-gradient(to right, #2bf9e6, #31b4f1)',
+        <Card
+          onClick={() => navigate('/self-events')}
+          sx={{
+            background: 'linear-gradient(to right, #449ad6, #303d4d)',
+            px: 4,
+            ':hover': {
+              opacity: 0.8,
+            },
+            cursor: 'pointer',
+            borderRadius: '16px',
+            height: '100%',
+            py: 4,
           }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 50,
+              height: 50,
+              borderRadius: '50%',
+              background: 'linear-gradient(to right, #2bf9e6, #31b4f1)',
+            }}
           >
-            <PersonAddIcon sx={{ color: 'white' }} />
+            <CelebrationIcon sx={{ color: 'white' }} />
           </Box>
           <CardContent sx={{ mt: 1, p: 0 }}>
             <Typography variant="h5" sx={{ color: 'white' }}>
-              Создай сам
+              События в городе
             </Typography>
           </CardContent>
         </Card>
