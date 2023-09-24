@@ -22,21 +22,23 @@ export function SelfEventForm() {
     city: '',
   });
   const [postSelfEvent] = usePostSelfEventMutation();
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
   };
-
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  console.log('wdsf');
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const now = moment().format('YYYY-MM-DDTHH:mm:ssZ');
 
     formData.category = 'self-made';
     formData.city = 'Astana';
+    console.log(now);
     formData.datetime = now;
+    console.log(formData);
     postSelfEvent(formData);
   };
 
@@ -49,20 +51,22 @@ export function SelfEventForm() {
             label="Название"
             name="title"
             value={formData.title}
+            sx={{ bgcolor: 'white', border: 'noen', borderRadius: 1 }}
             onChange={handleChange}
           />
           <TextField
             fullWidth
-            label="Описание"
+            label="Контакты"
             name="description"
+            sx={{ bgcolor: 'white', border: 'noen', borderRadius: 1 }}
             value={formData.description}
             onChange={handleChange}
             multiline
-            rows={4}
           />
           <TextField
             fullWidth
             label="Ссылка на фото из интернета"
+            sx={{ bgcolor: 'white', border: 'noen', borderRadius: 1 }}
             name="banner_url"
             value={formData.banner_url}
             onChange={handleChange}
@@ -71,13 +75,15 @@ export function SelfEventForm() {
             fullWidth
             label="Автор"
             name="author"
+            sx={{ bgcolor: 'white', border: 'noen', borderRadius: 1 }}
             value={formData.author}
             onChange={handleChange}
           />
           <TextField
             fullWidth
-            label="City"
+            label="Город"
             name="city"
+            sx={{ bgcolor: 'white', border: 'noen', borderRadius: 1 }}
             value={formData.city}
             onChange={handleChange}
           />

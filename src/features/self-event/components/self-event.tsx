@@ -117,9 +117,9 @@ export function SelfEvent() {
               </Typography>
               <Box style={{ flex: '1' }}>
                 <Typography variant="body1" gutterBottom>
-                  Адресс:
+                  Адрес:
+                  {' '}
                   {event.city}
-                  ,
                   {' '}
                   {event.address}
                 </Typography>
@@ -132,6 +132,16 @@ export function SelfEvent() {
                   Расстояние от вас:
                   {' '}
                   {event.distance}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    marginTop: '10px',
+                  }}
+                >
+                  Контакты:
+                  {' '}
+                  {event.description}
                 </Typography>
               </Box>
             </Box>
