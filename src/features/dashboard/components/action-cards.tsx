@@ -6,9 +6,11 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import {
   Box, Card, CardContent, Typography,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 export function ActionCards() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <Box sx={{
@@ -49,7 +51,7 @@ export function ActionCards() {
 
         <CardContent sx={{ mt: 1, p: 0 }}>
           <Typography variant="h5" sx={{ color: 'white' }}>
-            Афиша
+            {t('afisha')}
           </Typography>
         </CardContent>
 
@@ -85,7 +87,7 @@ export function ActionCards() {
 
           <CardContent sx={{ mt: 1, p: 0 }}>
             <Typography variant="h5" sx={{ color: 'white' }}>
-              Скидки
+              {t('discount')}
             </Typography>
           </CardContent>
         </Card>
@@ -118,7 +120,7 @@ export function ActionCards() {
           </Box>
           <CardContent sx={{ mt: 1, p: 0 }}>
             <Typography variant="h5" sx={{ color: 'white' }}>
-              События в городе
+              {t('EventInCity')}
             </Typography>
           </CardContent>
         </Card>

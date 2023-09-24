@@ -4,6 +4,7 @@ import {
   Box,
   Button, Dialog, DialogContent, DialogTitle, Skeleton, Typography,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import promotionsApi from '~/api/promotions/api';
 import { TypingAnimation } from '~/components/typing-animation';
@@ -15,6 +16,7 @@ type Props={
 }
 
 export function SupportDialog({ open, onClose }:Props) {
+  const { t } = useTranslation();
   const [questionAsked, setIsQuestionAsked] = useState<boolean>(false);
 
   const { jerry: jerrySelect } = useAppSelector((state) => state.jerrySlice);
@@ -31,7 +33,7 @@ export function SupportDialog({ open, onClose }:Props) {
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="lg">
-      <DialogTitle>Куда пойти?</DialogTitle>
+      <DialogTitle>{t('whereToGo')}</DialogTitle>
       <DialogContent sx={{
         display: 'flex',
         width: 500,
@@ -48,10 +50,10 @@ export function SupportDialog({ open, onClose }:Props) {
           && (
           <>
             <Typography variant="h6">
-              Не знаете куда пойти?
+              {t('doNotKnow')}
             </Typography>
             <Typography variant="h6">
-              Jerry вам подскажет
+              {t('Jerry')}
             </Typography>
             <img
               src="support.jpg"
@@ -60,7 +62,9 @@ export function SupportDialog({ open, onClose }:Props) {
               alt="Support"
             />
             <Button color="info" variant="contained" onClick={() => setIsQuestionAsked(true)}>
-              Спросить у джери
+              {
+              t('askJerry')
+              }
             </Button>
           </>
           )}

@@ -6,6 +6,7 @@ import {
   Paper, Typography, CircularProgress, Button, Box, IconButton, Accordion, AccordionSummary, AccordionDetails,
 } from '@mui/material';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { IEvents, useGetSelfEventQuery } from '~/api/events/api';
@@ -35,6 +36,7 @@ const jerries = [
 ];
 
 export function SelfEvent() {
+  const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
   const [value, setValue] = React.useState('jerry3');
   const { data, isLoading, isError } = useGetSelfEventQuery(value);
@@ -49,8 +51,18 @@ export function SelfEvent() {
   const [id, setId] = React.useState('' as string);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left' }}>
-      <Box>
+    <Box>
+      <IconButton onClick={() => navigate('/')}>
+        <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
+      </IconButton>
+      <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+
+        <Typography variant="h5" sx={{ color: 'white' }}>
+          {t('link')}
+        </Typography>
+        <Box onClick={() => navigate('/self-event-form')}>
+          <Qrcode url="http://169.254.37.115:5173/self-event-form" />
+        </Box>
 
         <IconButton onClick={() => navigate('/')}>
           <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />

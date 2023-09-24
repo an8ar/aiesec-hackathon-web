@@ -8,6 +8,7 @@ import React, { useRef, useState } from 'react';
 import {
   Button, Dialog, DialogTitle, TextField, DialogContent, DialogActions, useTheme,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import Webcam from 'react-webcam';
 import styled from 'styled-components';
 
@@ -56,6 +57,7 @@ function PhotoCapture({
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const { t } = useTranslation();
 
   const handleClose = () => {
     setOpen(false);
@@ -156,7 +158,7 @@ function PhotoCapture({
 
       {/* Dialog */}
       <Dialog onClose={handleClose} open={open} maxWidth="lg">
-        <DialogTitle>Capture Photo</DialogTitle>
+        <DialogTitle>{t('capture')}</DialogTitle>
         <DialogContent>
           <Webcam audio={false} ref={webcamRef} />
         </DialogContent>
@@ -174,7 +176,7 @@ function PhotoCapture({
               width: '400px',
             }}
             type="email"
-            placeholder="Enter email"
+            placeholder={t('enterEmail')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -187,7 +189,7 @@ function PhotoCapture({
         }}
         >
           <Button color="primary" variant="contained" type="button" onClick={capturePhoto}>
-            Capture
+            {t('take')}
           </Button>
           <Button
             color="primary"
@@ -195,11 +197,11 @@ function PhotoCapture({
             type="button"
             onClick={handleCancel}
           >
-            Cancel
+            {t('cancel')}
           </Button>
           { imageFile && (
           <Button color="primary" variant="contained" type="button" onClick={handleSubmit}>
-            Submit
+            {t('submit')}
           </Button>
           )}
           <Button
@@ -217,7 +219,7 @@ function PhotoCapture({
               }
             }}
           >
-            Download
+            {t('download')}
           </Button>
         </DialogActions>
       </Dialog>

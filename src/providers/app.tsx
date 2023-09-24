@@ -6,8 +6,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { SnackbarProvider } from 'notistack';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 
+import i18n from '~/components/I18n';
 import { store } from '~/store';
 import ThemeProvider from '~/theme';
 
@@ -43,7 +45,9 @@ export function AppProvider({ children }: AppProviderProps) {
           <HelmetProvider>
             <Provider store={store}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <ThemeProvider>{children}</ThemeProvider>
+                <I18nextProvider i18n={i18n}>
+                  <ThemeProvider>{children}</ThemeProvider>
+                </I18nextProvider>
               </LocalizationProvider>
             </Provider>
           </HelmetProvider>

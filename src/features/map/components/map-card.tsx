@@ -4,10 +4,12 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 import {
   Box, CardContent, Typography, Card,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 export function MapCard() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <Box sx={{ my: 1, width: '100%' }} onClick={() => navigate('map')}>
       <Card sx={{
@@ -34,7 +36,7 @@ export function MapCard() {
 
         <CardContent sx={{ mt: 1, p: 0, width: '100%' }}>
           <Typography variant="h3" sx={{ color: 'white' }}>
-            Карта
+            {t('card')}
           </Typography>
         </CardContent>
         <Box sx={{ w: 100, h: 100, bgcolor: 'lightcoral' }} />
