@@ -130,9 +130,9 @@ export const MapFilter = React.memo(({
         Где я?
       </Button>
       <Box onClick={() => console.log(data?.events[0].latitude)}>
-        <Typography>Показать маршрут на телефон</Typography>
+        <Typography sx={{ color: 'white' }}>Показать маршрут на телефон</Typography>
         <Qrcode
-          url={`https://www.google.com/maps/search/?api=1&query=${data?.events[0].latitude},${data?.events[0].longitude}}`}
+          url={`https://www.google.com/maps/search/?api=1&query=${data?.events[0].latitude},${data?.events[0].longitude}`}
         />
       </Box>
 
