@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,12 +7,14 @@ import {
 
 import { eventApi } from '~/api/events/api';
 import promotionsApi, { PROMOTIONS_API_REDUCER_KEY } from '~/api/promotions/api';
+import { jerrySlice } from '~/features/Slices/jerrySlice';
 
 import { RESET_STATE_ACTION_TYPE } from './actions/resetState';
 
 const reducers = {
   [eventApi.reducerPath]: eventApi.reducer,
   [PROMOTIONS_API_REDUCER_KEY]: promotionsApi.reducer,
+  jerrySlice: jerrySlice.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
