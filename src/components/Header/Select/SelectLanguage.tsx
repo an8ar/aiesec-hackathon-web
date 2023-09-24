@@ -19,8 +19,10 @@ export function SelectLanguage() {
       sx={{
         backgroundColor: '#293749',
         color: 'white',
-        padding: 1,
-        maxHeight: 40,
+        px: 3,
+        py: 2,
+        borderRadius: 4,
+        maxHeight: 55,
         '& legend': { display: 'none' },
         '& fieldset': { top: 0 },
 

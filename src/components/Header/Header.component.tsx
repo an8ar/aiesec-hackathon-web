@@ -50,6 +50,7 @@ export default function HeaderComponent() {
         backgroundColor: '#405768',
         color: 'white',
         mt: 2,
+        borderRadius: 2,
       }}
     >
       <Toolbar sx={{
@@ -60,7 +61,7 @@ export default function HeaderComponent() {
         textColor: 'white',
       }}
       >
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
           {localTime}
         </Typography>
         <Box sx={{
@@ -78,7 +79,8 @@ export default function HeaderComponent() {
             sx={{
               display: 'flex',
               background: '#293749',
-              p: 1,
+              px: 3,
+              py: 2,
               borderRadius: 8,
               alignItems: 'center',
             }}
@@ -95,7 +97,8 @@ export default function HeaderComponent() {
             component="div"
             sx={{
               background: '#293749',
-              p: 1,
+              px: 3,
+              py: 2,
               borderRadius: 8,
             }}
           >
