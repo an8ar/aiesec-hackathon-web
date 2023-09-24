@@ -131,15 +131,13 @@ export const Map = React.memo(() => {
         </>
         )}
 
-
-      >
-        <MarkerF position={markerPosition} />
-      </GoogleMap>
-      <Button variant="contained" onClick={() => map?.panTo(initialCenter)}>
-        Go center
-      </Button>
+        <GoogleMap>
+          <MarkerF position={markerPosition} />
+        </GoogleMap>
+        <Button variant="contained" onClick={() => map?.panTo(initialCenter)}>
+          Go center
+        </Button>
       </Stack>
-
 
     </Box>
   );
