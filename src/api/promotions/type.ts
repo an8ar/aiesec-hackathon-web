@@ -7,3 +7,11 @@ export type GetPromotionsResponse={
 export type GetPromotionsRequest={
     jerryId: string;
 }
+
+export type SupportRequest={
+    jerryId: string;
+}
+
+export type SupportResponse={
+message: string;
+}

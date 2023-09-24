@@ -33,7 +33,6 @@ export function SearchBar() {
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: 2,
-
     }}
     >
       <TextField
@@ -41,27 +40,9 @@ export function SearchBar() {
         value={textFieldValue}
         sx={{
           flexGrow: 1,
+          backgroundColor: 'white',
+          borderRadius: 1,
           color: 'white',
-          '& label.Mui-focused': {
-            color: 'white',
-          },
-          '& .MuiInput-underline:after': {
-            borderBottomColor: 'white',
-          },
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: 'white',
-            },
-            '&:hover fieldset': {
-              borderColor: 'white',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: 'white',
-            },
-          },
-          input: {
-            color: 'white',
-          },
         }}
         InputProps={{
           endAdornment:

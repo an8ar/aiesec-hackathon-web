@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,
@@ -21,7 +21,17 @@ export function SelectJerry() {
       setJerry(selectedJerry);
     }
   };
+
   const selectValue = searchParams.get('jerryId') ?? jerrySelect?.ID ?? '';
+
+  useEffect(() => {
+    if (jerrySelect) {
+      console.log('run');
+      searchParams.set('jerryId', jerrySelect.ID);
+      setSearchParams(searchParams);
+    }
+  }, [jerrySelect, searchParams]);
+
   const jerrys = JERRYS.find((item) => item.ID === selectValue);
   localStorage.setItem('jerry', JSON.stringify(jerrys));
   return (
