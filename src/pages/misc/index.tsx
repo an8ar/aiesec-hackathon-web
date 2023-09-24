@@ -10,6 +10,7 @@ const { Page404 } = lazyImport(() => import('./Page404'), 'Page404');
 const { HomePage } = lazyImport(() => import('./Home'), 'HomePage');
 const { AfishaPage } = lazyImport(() => import('./Afisha'), 'AfishaPage');
 const { MapPage } = lazyImport(() => import('./Map'), 'MapPage');
+const { SelfEventPage } = lazyImport(() => import('./SelfEvent'), 'SelfEventPage');
 
 export const MiscRoutes = [
   <Route path="/" element={<HomePage />} key="home" />,
@@ -18,5 +19,6 @@ export const MiscRoutes = [
   <Route path="/500" element={<Page500 />} key="500" />,
   <Route path="/afisha" element={<AfishaPage />} />,
   <Route path="/map" element={<MapPage />} key="home" />,
+  <Route path="/self-event" element={<SelfEventPage />} key="selfevent" />,
 
 ];

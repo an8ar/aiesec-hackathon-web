@@ -11,10 +11,17 @@ export const eventApi = createApi({
         jerryId: string,
       ) => `/event/filter?jerry_id=${jerryId}`,
     }),
+    postSelfEvent: builder.mutation<any, any>({
+      query: (body) => ({
+        url: '/event/create',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetEventsQuery } = eventApi;
+export const { useGetEventsQuery, usePostSelfEventMutation } = eventApi;
 
 export interface IEventsSolo{
     events: IEvents[];
