@@ -5,6 +5,8 @@ import {
   Box, Card, CardContent, CardMedia, Chip, IconButton, Tooltip, Typography,
 } from '@mui/material';
 
+import { MapFilter } from '~/components/CreateByYourself/Filter/MapFilter';
+import { RightDrawer } from '~/components/right-drawer';
 import { StarRatings } from '~/components/StarRatings';
 import { getFormattedTime } from '~/utils/getFormattedTime';
 
@@ -15,6 +17,12 @@ type Props={
 }
 
 export default function CardList({ promotions }:Props) {
+  const [open, setOpen] = React.useState(false);
+  const onClose = () => {
+    setOpen(false);
+  };
+  const [id, setId] = React.useState('' as string);
+
   return (
     <Box sx={{
       display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4,
@@ -55,14 +63,21 @@ export default function CardList({ promotions }:Props) {
               %
             </p>
           </Tooltip>
-          <IconButton sx={{
-            position: 'absolute',
-            top: 10,
-            right: 4,
-            backgroundColor: '#293749',
-            borderRadius: '50%',
-            color: 'white',
-          }}
+          <IconButton
+            sx={{
+              position: 'absolute',
+              top: 10,
+              right: 4,
+              backgroundColor: '#293749',
+              borderRadius: '50%',
+              color: 'white',
+            }}
+            onClick={
+            () => {
+              setOpen(true);
+              setId(promotion.id);
+            }
+          }
           >
             <RouteIcon />
           </IconButton>
@@ -133,6 +148,13 @@ export default function CardList({ promotions }:Props) {
           </CardContent>
         </Card>
       ))}
+      <RightDrawer
+        open={open}
+        onClose={onClose}
+        onOpen={() => setOpen(true)}
+      >
+        <MapFilter id={id} />
+      </RightDrawer>
     </Box>
   );
 }

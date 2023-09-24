@@ -6,7 +6,7 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import {
   Box, Card, CardContent, Typography,
 } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function ActionCards() {
   const navigate = useNavigate();
@@ -15,17 +15,19 @@ export function ActionCards() {
       display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', gap: 2,
     }}
     >
-      <Card sx={{
-        background: 'linear-gradient(to right, #4f7dc1, #34313b)',
-        cursor: 'pointer',
-        borderRadius: '16px',
-        ':hover': {
-          opacity: 0.8,
-        },
-        height: '40%',
-        px: 4,
-        py: 4,
-      }}
+      <Card
+        sx={{
+          background: 'linear-gradient(to right, #4f7dc1, #34313b)',
+          cursor: 'pointer',
+          borderRadius: '16px',
+          ':hover': {
+            opacity: 0.8,
+          },
+          height: '40%',
+          px: 4,
+          py: 4,
+        }}
+        onClick={() => navigate('/createSxodim')}
       >
         <Box sx={{
           display: 'flex',
@@ -44,11 +46,13 @@ export function ActionCards() {
             }}
           />
         </Box>
+
         <CardContent sx={{ mt: 1, p: 0 }}>
           <Typography variant="h5" sx={{ color: 'white' }}>
             Афиша
           </Typography>
         </CardContent>
+
       </Card>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 2 }}>
         <Card
@@ -111,14 +115,7 @@ export function ActionCards() {
           </Box>
           <CardContent sx={{ mt: 1, p: 0 }}>
             <Typography variant="h5" sx={{ color: 'white' }}>
-              <Link
-                to="/create"
-                style={{
-                  textDecoration: 'none', color: 'white', fontSize: 'inherit',
-                }}
-              >
-                Создай сам
-              </Link>
+              Создай сам
             </Typography>
           </CardContent>
         </Card>

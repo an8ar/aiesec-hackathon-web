@@ -9,7 +9,7 @@ export const eventApi = createApi({
     getEvents: builder.query<IEventsSolo, string>({
       query: (
         jerryId: string,
-      ) => `/event/filter?jerry_id=${jerryId}`,
+      ) => `/event/filter?jerry_id=${jerryId}&categories=sxodim`,
     }),
   }),
 });

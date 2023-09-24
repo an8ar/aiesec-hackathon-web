@@ -1,14 +1,19 @@
+/* eslint-disable no-console */
+/* eslint-disable max-len */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-restricted-imports */
 import React, { useState } from 'react';
 
 import {
-  Box, Button, CircularProgress, TextField, Typography,
+  Box, Button, CircularProgress,
 } from '@mui/material';
 import {
   GoogleMap, MarkerF, useLoadScript,
 } from '@react-google-maps/api';
 
 import { useGetEventsQuery } from '~/api/events/api';
+import promotionsApi from '~/api/promotions/api';
+import { JERRYS } from '~/constants/jerry';
 import { nightMode } from '~/features/map/components/night-mode-props';
 
 const containerStyle = {
@@ -23,15 +28,23 @@ const initialCenter = {
 
 export const MapFilter = React.memo(({
   id, value,
-}: {id: string, value: string}) => {
-  const { data } = useGetEventsQuery(value);
-  console.log(data);
+}: {id: string, value?: string}) => {
+  const { data } = useGetEventsQuery(value || '');
+  const {
+    data: deals = { promotions: [] },
+    isSuccess,
+    isFetching,
+  } = promotionsApi.endpoints.getPromotions.useQuery({ jerryId: 'jerry3' });
+  const selectedChoco = deals?.promotions.find((item) => item.id === id);
+
+  const jerrys = localStorage.getItem('jerry');
+  console.log(jerrys);
+
   const selectedData = data?.events.find((item) => item.id === id);
-  console.log(selectedData);
 
   const [map, setMap] = useState<null | google.maps.Map>(null);
   const [markerPosition, setMarkerPosition] = useState(initialCenter);
-  const [destinationName, setDestinationName] = useState<any>('');
+  const [destinationName, setDestinationName] = useState<string>('');
 
   const [directionsRenderer,
     setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
@@ -53,24 +66,34 @@ export const MapFilter = React.memo(({
     setDistance('');
     setDestinationName('');
   };
+  const fountJerrySxodim = JERRYS.find((item) => item.ID === value);
+  const foundJerryChoco = JERRYS.find((item) => item.ID === selectedChoco?.id);
+  console.log(foundJerryChoco);
+  console.log(fountJerrySxodim);
+  console.log(JERRYS);
 
   const createRoute = () => {
     const directionsService = new google.maps.DirectionsService();
     const renderer = new google.maps.DirectionsRenderer();
     setDirectionsRenderer(renderer);
     directionsService.route({
-      origin: `${selectedData?.latitude},${selectedData?.longitude}`,
-      destination: `${destinationName}`,
+      origin: fountJerrySxodim ? `${fountJerrySxodim?.Latitude}, ${fountJerrySxodim?.Longitude}` : `${foundJerryChoco?.Latitude}, ${foundJerryChoco?.Longitude}`,
+      destination: selectedData ? `${selectedData?.address}` : `${selectedChoco?.address}`,
       travelMode: google.maps.TravelMode.WALKING,
     }).then((res) => {
       renderer.setOptions({
-        directions: res, suppressMarkers: true, map, polylineOptions: { strokeColor: 'red' },
+        directions: res, suppressMarkers: true, map, polylineOptions: { strokeColor: 'yellow' },
       });
 
       setDistance(res.routes[0].legs[0].distance?.text);
       setDuration(res.routes[0].legs[0].duration?.text);
     });
   };
+  React.useLayoutEffect(() => {
+    if (map) {
+      createRoute();
+    }
+  }, [map]);
 
   if (!isLoaded) {
     return <CircularProgress />;
@@ -80,17 +103,6 @@ export const MapFilter = React.memo(({
       width: '100%', height: '100%', p: 2,
     }}
     >
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <TextField value={destinationName} onChange={(e) => setDestinationName(e.target.value)} />
-        <Button variant="contained" onClick={createRoute}>
-          Calculate Route
-        </Button>
-        <Typography>{distance}</Typography>
-        <Typography>{duration}</Typography>
-        <Button variant="contained" onClick={clearRoute}>
-          Clear Route
-        </Button>
-      </Box>
 
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -105,7 +117,13 @@ export const MapFilter = React.memo(({
       >
         <MarkerF position={markerPosition} />
       </GoogleMap>
-      <Button variant="contained" onClick={() => map?.panTo(initialCenter)}>
+      <Button
+        variant="contained"
+        style={{
+          display: 'block', margin: '0 auto', marginTop: '10px',
+        }}
+        onClick={() => map?.panTo(initialCenter)}
+      >
         Go center
       </Button>
     </Box>
