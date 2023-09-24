@@ -33,16 +33,19 @@ export function SearchBar() {
       flexDirection: 'row',
       alignItems: 'center',
       borderRadius: 2,
+      gap: 2,
     }}
     >
       <TextField
         id="outlined-start-adornment"
+        placeholder="Ищите любые эвенты в вашем городе"
         value={textFieldValue}
         sx={{
           flexGrow: 1,
           backgroundColor: 'white',
           borderRadius: 1,
           color: 'white',
+          maxHeight: 50,
         }}
         InputProps={{
           endAdornment:
@@ -68,7 +71,7 @@ export function SearchBar() {
           sx={{
             fontSize: 24,
             px: 4,
-            py: 2,
+            py: 3,
             color: 'white',
             border: date === formatDate(currentDate) ? 1 : 0,
             borderColor: 'white',
@@ -89,7 +92,7 @@ export function SearchBar() {
           sx={{
             fontSize: 24,
             px: 4,
-            py: 2,
+            py: 3,
             color: 'white',
             border: date === formatDate(getFollowingDay(currentDate)) ? 1 : 0,
             borderColor: 'white',

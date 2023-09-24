@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Container, IconButton, Box } from '@mui/material';
+import { ChevronLeft } from '@mui/icons-material';
+import { Container, Box, Typography } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useGetEventsQuery } from '~/api/events/api';
 import { CardSkeleton, SearchBar } from '~/features/afisha';
 
 import HeaderComponent from '../Header/Header.component';
-import { Iconify } from '../Iconify';
 import { Page } from '../Page';
 import { CardList } from './Filter/CardList';
 
@@ -21,12 +21,24 @@ export function Yourself() {
   } = useGetEventsQuery(jerryId as string, { skip: jerryId === null });
   return (
     <Page title="Sxodim">
-      <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'column' }}>
         <HeaderComponent />
-        <Box>
-          <IconButton onClick={() => navigate('/')}>
-            <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
-          </IconButton>
+        <Box sx={{ mt: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              textDecoration: 'underline',
+              color: 'white',
+              display: 'flex',
+              mb: 0.5,
+
+              cursor: 'pointer',
+            }}
+            onClick={() => navigate('/')}
+          >
+            <ChevronLeft />
+            Назад
+          </Typography>
         </Box>
         <Box>
           <SearchBar />

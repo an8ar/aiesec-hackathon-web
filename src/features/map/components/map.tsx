@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
+import CloseIcon from '@mui/icons-material/Close';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import NearMeIcon from '@mui/icons-material/NearMe';
 import {
-  Box, Button, CircularProgress, TextField, Typography, Stack, IconButton,
+  Box, CircularProgress, TextField, Typography, IconButton,
 } from '@mui/material';
 import {
   GoogleMap, MarkerF, useLoadScript,
@@ -82,10 +85,102 @@ export const Map = React.memo(() => {
         <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
       </IconButton>
       <Box sx={{
-        width: '100%', height: '100%', p: 2, display: 'flex', gap: 2,
+        width: '100%',
+        height: '100%',
+        p: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        gap: 2,
       }}
       >
-        <Stack spacing={2} flexGrow={4}>
+        <Box sx={{
+          display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: 2,
+        }}
+        >
+          <Box sx={{
+            display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: 2,
+          }}
+          >
+            <TextField
+              value={destinationName}
+              onChange={(e) => setDestinationName(e.target.value)}
+              variant="outlined"
+              color="secondary"
+              placeholder="Куда хотите?"
+              sx={{ bgcolor: 'white', minWidth: 250, borderRadius: 2 }}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 50,
+                height: 50,
+                cursor: 'pointer',
+                borderRadius: '50%',
+                background: 'linear-gradient(to right, #4f7dc1, #2aacf2)',
+              }}
+              onClick={createRoute}
+            >
+              <DirectionsCarIcon style={{ color: 'white' }} />
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 50,
+                height: 50,
+                cursor: 'pointer',
+                borderRadius: '50%',
+                background: 'linear-gradient(to right, #4f7dc1, #2aacf2)',
+              }}
+              onClick={() => map?.panTo(initialCenter)}
+            >
+              <NearMeIcon style={{ color: 'white' }} />
+            </Box>
+          </Box>
+          <Box sx={{
+            display: 'flex', justifyContent: 'center', gap: 2,
+          }}
+          >
+            {distance !== '' && (
+            <Box sx={{
+              background: 'white',
+              p: 1,
+              color: 'black',
+              borderRadius: 2,
+            }}
+            >
+              <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              >
+                <Typography variant="h6">
+                  {duration}
+                </Typography>
+                <IconButton onClick={clearRoute}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+              <Typography variant="body2">
+                {distance}
+                {' '}
+                с пробками
+              </Typography>
+            </Box>
+            )}
+          </Box>
+          <GoogleMap>
+            <MarkerF position={markerPosition} />
+          </GoogleMap>
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={initialCenter}
@@ -100,50 +195,7 @@ export const Map = React.memo(() => {
             <MarkerF position={markerPosition} />
             {distance && <MarkerF position={destinationLocation} />}
           </GoogleMap>
-          <Button
-            variant="contained"
-            onClick={() => map?.panTo(initialCenter)}
-            sx={{ maxWidth: 200 }}
-          >
-            Где я?
-          </Button>
-        </Stack>
-        <Stack spacing={2} flexGrow={3}>
-          <TextField
-            value={destinationName}
-            onChange={(e) => setDestinationName(e.target.value)}
-            variant="outlined"
-            color="secondary"
-            placeholder="Куда хотите?"
-            sx={{ bgcolor: 'white' }}
-          />
-          <Button variant="contained" onClick={createRoute}>
-            Пошли!
-          </Button>
-          {distance !== '' && (
-            <>
-              <Typography sx={{ color: 'white', width: '100%' }}>
-                Расстояние:
-                {' '}
-                {distance}
-              </Typography>
-              <Typography sx={{ color: 'white' }}>
-                Время:
-                {' '}
-                {duration}
-
-              </Typography>
-              <Button variant="contained" onClick={clearRoute}>
-                Удалить Маршрут
-              </Button>
-            </>
-          )}
-
-          <GoogleMap>
-            <MarkerF position={markerPosition} />
-          </GoogleMap>
-        </Stack>
-
+        </Box>
       </Box>
     </Box>
 

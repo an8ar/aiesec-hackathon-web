@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Box, Typography, IconButton } from '@mui/material';
+import { ChevronLeft } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import promotionsApi from '~/api/promotions/api';
-import { Iconify } from '~/components/Iconify';
 
 import CardList from './card-list';
 import { CardSkeleton } from './card-skeleton';
@@ -28,15 +28,20 @@ export function Afisha() {
     { skip: jerryId === null },
   );
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Box>
-        <IconButton onClick={() => navigate('/')}>
-          <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
-        </IconButton>
-      </Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography
+        sx={{
+          textDecoration: 'underline', color: 'white', display: 'flex', mb: 0.5, cursor: 'pointer',
+        }}
+        variant="h6"
+        onClick={() => navigate('/')}
+      >
+        <ChevronLeft />
+        Назад
+      </Typography>
       <Box>
         <SearchBar />
-        <Typography variant="h3" sx={{ color: 'white' }}>
+        <Typography variant="h3" sx={{ color: 'white', my: 1 }}>
           Акции рядом с вами
         </Typography>
         {isSuccess
