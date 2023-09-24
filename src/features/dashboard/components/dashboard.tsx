@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 
 import { MapCard, MapDrawer } from '~/features/map';
-import { Qrcode } from '~/features/qrcode';
 
 import { ActionCards } from './action-cards';
 import { AdvertisementCard } from './advertisement-card';
@@ -29,7 +28,6 @@ export function Dashboard() {
           onOpen={() => setOpenDrawer(true)}
         />
         <MapCard />
-        <Qrcode url="https://www.google.com/" />
       </Box>
       <Box />
     </Box>

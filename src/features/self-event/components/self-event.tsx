@@ -2,15 +2,16 @@
 import React from 'react';
 
 import {
-  MenuItem, Paper, TextField, Typography, CircularProgress, Button, Box, IconButton,
+  Paper, Typography, CircularProgress, Button, Box, IconButton,
 } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
 import { IEvents, useGetSelfEventQuery } from '~/api/events/api';
 import { Iconify } from '~/components/Iconify';
 import { RightDrawer } from '~/components/right-drawer';
+
+import { Qrcode } from 'features/qrcode';
 
 import { MapFilter } from './map-filter';
 
@@ -52,53 +53,15 @@ export function SelfEvent() {
       <IconButton onClick={() => navigate('/')}>
         <Iconify icon="material-symbols:arrow-back-ios-new" sx={{ width: 24, height: 24 }} />
       </IconButton>
-      <Box style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '20px',
-        flexWrap: 'wrap',
-        marginTop: '20px',
-      }}
-      >
-        <TextField
-          id="outlined-select-currency"
-          select
-          sx={{
-            width: '400px',
-            marginBottom: '20px',
-          }}
-          label="Select a City"
-          variant="outlined"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          fullWidth
-        >
-          {jerries.map((option) => (
-            <MenuItem
-              key={option.value}
-              value={option.value}
-            >
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <DatePicker
-          label="Select a Date"
-          value={selectedDate}
-          onChange={handleDateChange}
-          renderInput={(params) => (
-            <TextField
-              sx={{
-                width: '400px',
-                marginBottom: '20px',
-                marginLeft: '20px',
-              }}
-              {...params}
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
+      <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+
+        <Typography variant="h5" sx={{ color: 'white' }}>
+          Чтобы добавить свой ивент, перейдите по QR-коду
+        </Typography>
+        <Box onClick={() => navigate('/self-event-form')}>
+          <Qrcode url="http://169.254.37.115:5173/self-event-form" />
+        </Box>
+
       </Box>
 
       <Box style={{
