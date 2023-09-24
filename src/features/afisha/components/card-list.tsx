@@ -75,6 +75,57 @@ export default function CardList({ promotions }:Props) {
   };
   const [id, setId] = React.useState('' as string);
 
+  const [promotionsList, setPromitions] = useState<Promotion[]>(promotions);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchQuery = searchParams.get('search');
+
+  const dateQuery = searchParams.get('date');
+
+  useEffect(() => {
+    const applyFilter = (input: string) => {
+      if (input) {
+        const searchTerm = input.replace(/\s/g, '').toLowerCase();
+
+        const filteredPromotions = promotions.filter((promotion) => {
+          const titleWithoutSpaces = promotion.title.replace(/\s/g, '').toLowerCase();
+          return titleWithoutSpaces.includes(searchTerm);
+        });
+
+        setPromitions(filteredPromotions);
+      } else if (input === '') {
+        setPromitions(promotions);
+      }
+    };
+
+    if (searchQuery) {
+      applyFilter(searchQuery);
+    } else {
+      setPromitions(promotions); // Set promotions when there's no search query
+    }
+  }, [searchQuery, promotions]); // Updated dependencies
+
+  useEffect(() => {
+    const applyDateFilter = (date: string) => {
+      if (date) {
+        const filteredPromotions = promotions.filter((promotion) => {
+          const expiryDate = promotion.expires.split('T')[0];
+
+          return (new Date(expiryDate) >= new Date(date));
+        });
+        setPromitions(filteredPromotions);
+      } else if (date === '') {
+        setPromitions(promotions);
+      }
+    };
+
+    if (dateQuery) {
+      applyDateFilter(dateQuery);
+    } else {
+      setPromitions(promotions); // Set promotions when there's no search query
+    }
+  }, [dateQuery, promotions]);
   return (
 
     <Box>
