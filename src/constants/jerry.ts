@@ -7,13 +7,12 @@ export const JERRYS = [
   },
   {
     ID: 'jerry3',
-    Latitude:
-    51.129181,
-    Longitude: 71.430724,
+    Latitude: 51.089835,
+    Longitude: 71.415226,
     City: 'Astana',
     name: 'Jerry Mega-Silkway',
   },
   {
-    ID: 'jerry4', Latitude: 51.089835, Longitude: 71.415226, City: 'Astana', name: 'Jerry Baiterek',
+    ID: 'jerry4', Latitude: 51.129181, Longitude: 71.430724, City: 'Astana', name: 'Jerry Baiterek',
   },
 ];
