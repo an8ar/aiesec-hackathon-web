@@ -17,7 +17,6 @@ export function MapDrawer({ onClose, onOpen, open }:DrawerProps) {
       open={open}
     >
       <Map />
-
     </RightDrawer>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import React, { useState } from 'react';
 
 import {
@@ -7,7 +8,8 @@ import {
   GoogleMap, MarkerF, useLoadScript,
 } from '@react-google-maps/api';
 
-import { nightMode } from './night-mode-props';
+import { useGetEventsQuery } from '~/api/events/api';
+import { nightMode } from '~/features/map/components/night-mode-props';
 
 const containerStyle = {
   width: '400px',
@@ -19,7 +21,14 @@ const initialCenter = {
   lng: 71.400222,
 };
 
-export const Map = React.memo(() => {
+export const MapFilter = React.memo(({
+  id, value,
+}: {id: string, value: string}) => {
+  const { data } = useGetEventsQuery(value);
+  console.log(data);
+  const selectedData = data?.events.find((item) => item.id === id);
+  console.log(selectedData);
+
   const [map, setMap] = useState<null | google.maps.Map>(null);
   const [markerPosition, setMarkerPosition] = useState(initialCenter);
   const [destinationName, setDestinationName] = useState<any>('');
@@ -50,7 +59,7 @@ export const Map = React.memo(() => {
     const renderer = new google.maps.DirectionsRenderer();
     setDirectionsRenderer(renderer);
     directionsService.route({
-      origin: 'Кабанбай Батыра 53, Астана',
+      origin: `${selectedData?.latitude},${selectedData?.longitude}`,
       destination: `${destinationName}`,
       travelMode: google.maps.TravelMode.WALKING,
     }).then((res) => {

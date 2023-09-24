@@ -2,12 +2,15 @@
 import React from 'react';
 
 import {
-  MenuItem, Paper, TextField, Typography, CircularProgress,
+  MenuItem, Paper, TextField, Typography, CircularProgress, Button,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
 
 import { IEvents, useGetEventsQuery } from '~/api/events/api';
+import { RightDrawer } from '~/components/right-drawer';
+
+import { MapFilter } from './MapFilter';
 
 const jerries = [
   {
@@ -35,6 +38,12 @@ export function Filter() {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
+  const [open, setOpen] = React.useState(false);
+  const onClose = () => {
+    setOpen(false);
+  };
+  const [id, setId] = React.useState('' as string);
+
   return (
     <div>
       <div style={{
@@ -148,9 +157,26 @@ export function Filter() {
                 {' '}
                 {event.distance}
               </Typography>
+              <Button
+                onClick={() => {
+                  setOpen(true);
+                  setId(event.id);
+                }}
+                sx={{ marginTop: '20px' }}
+              >
+                Open Right Drawer
+
+              </Button>
             </div>
           </Paper>
         ))}
+        <RightDrawer
+          open={open}
+          onClose={onClose}
+          onOpen={() => setOpen(true)}
+        >
+          <MapFilter id={id} value={value} />
+        </RightDrawer>
       </div>
     </div>
   );
