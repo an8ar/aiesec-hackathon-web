@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import {
+  FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,
+} from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import { JERRYS } from '~/constants/jerry';
@@ -12,29 +14,47 @@ export function SelectJerry() {
     setSearchParams({ jerryId: e.target.value });
   };
 
-  const selectValue = searchParams.get('jerryId') ?? undefined;
+  const selectValue = searchParams.get('jerryId') ?? '';
 
   return (
-    <Select
-      value={selectValue}
-      variant="outlined"
-      onChange={handleChange}
-      label="Jerry"
+    <FormControl
       sx={{
-        backgroundColor: '#293749',
-        color: 'white',
-        padding: 1,
-        maxHeight: 40,
+        m: 1,
+        minWidth: 120,
         '& legend': { display: 'none' },
         '& fieldset': { top: 0 },
-
       }}
+      size="small"
     >
-      {JERRYS.map((jerry) => (
-        <MenuItem key={jerry.ID} value={jerry.ID}>
-          {jerry.name}
-        </MenuItem>
-      ))}
-    </Select>
+      <InputLabel
+        id="demo-select-small-label"
+        sx={{
+          '& legend': { display: 'none' },
+          '& fieldset': { top: 0 },
+        }}
+      >
+        Jerry
+      </InputLabel>
+      <Select
+        value={selectValue}
+        variant="outlined"
+        onChange={handleChange}
+        label="Jerry"
+        sx={{
+          backgroundColor: '#293749',
+          color: 'white',
+          padding: 1,
+          maxHeight: 40,
+          '& legend': { display: 'none' },
+          '& fieldset': { top: 0 },
+        }}
+      >
+        {JERRYS.map((jerry) => (
+          <MenuItem key={jerry.ID} value={jerry.ID}>
+            {jerry.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
